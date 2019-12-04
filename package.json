@@ -49,16 +49,6 @@
     "> 1%",
     "IE 10"
   ],
-  "lint-staged": {
-    "*.js": [
-      "npm run lint:eslint:fix",
-      "git add --force"
-    ],
-    "*.json": [
-      "prettier --write",
-      "git add --force"
-    ]
-  },
   "pre-commit": "lint:staged",
   "resolutions": {
     "babel-core": "7.0.0-bridge.0"
@@ -82,6 +72,7 @@
     "prop-types": "15.7.2",
     "react": "16.8.6",
     "react-dom": "16.8.6",
+    "react-flexbox-grid": "^2.1.2",
     "react-helmet": "6.0.0-beta",
     "react-intl": "2.8.0",
     "react-redux": "7.0.2",
@@ -90,7 +81,7 @@
     "redux-saga": "1.0.2",
     "reselect": "4.0.0",
     "sanitize.css": "8.0.0",
-    "styled-components": "4.2.0"
+    "styled-components": "^4.2.0"
   },
   "devDependencies": {
     "@babel/cli": "7.4.3",
