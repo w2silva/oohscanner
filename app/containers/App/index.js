@@ -16,7 +16,7 @@ import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import Header from 'components/Header';
 import Footer from 'components/Footer';
 import GlobalStyle from '../../global-styles';
-import { AppWrapper } from './styles';
+import AppWrapper from './AppWrapper';
 
 export default function App() {
   return (

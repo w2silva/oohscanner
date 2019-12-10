@@ -10,12 +10,13 @@ import React, { memo } from 'react';
 
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
+import Wrapper from './Wrapper';
 
 function AnnounceMedias() {
   return (
-    <div>
-      <FormattedMessage {...messages.header} />
-    </div>
+    <React.Fragment>
+      <Wrapper></Wrapper>
+    </React.Fragment>
   );
 }
 

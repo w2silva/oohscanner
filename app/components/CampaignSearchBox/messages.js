@@ -17,9 +17,9 @@ export default defineMessages({
     id: `${scope}.tryme.header`,
     defaultMessage: 'Try me!',
   },
-  trymeMessage: {
-    id: `${scope}.tryme.message`,
-    defaultMessage: 'Show Github repositories by',
+  titleSection: {
+    id: `${scope}.title.section`,
+    defaultMessage: 'Onde vamos anunciar?',
   },
   trymeAtPrefix: {
     id: `${scope}.tryme.atPrefix`,

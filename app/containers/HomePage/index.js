@@ -59,7 +59,7 @@ export function HomePage({
   return (
     <React.Fragment>
       <Helmet>
-        <title>Oohscanner - First Page</title>
+        <title>Oohscanner</title>
       </Helmet>
       <div>
         <Section>
