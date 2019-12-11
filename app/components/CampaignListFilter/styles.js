@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export default styled.button`
+export const accordionToggle = styled.button`
   width: 100%;
   padding: .375rem 0;
   border: 0;
@@ -15,3 +15,20 @@ export default styled.button`
   color: #02122c;
   color: var(--bpk-accordion-color, #02122c);
 `;
+
+export const accordionText = styled.span`
+  display: inline-block;
+  flex-grow: 1;
+`;
+
+export const accordionWrapper = styled.span`
+  display: inline-flex;
+  width: 100%;
+  flex-direction: row;
+`;
+
+export default {
+  accordionToggle,
+  accordionText,
+  accordionWrapper
+};

@@ -37,14 +37,14 @@ const CAMPAIGN_LIST = [{
 },]
 
 function CampaignList() {
-  const campaignList = CAMPAIGN_LIST.map((item) => (
-    <CampaignItem data={item} />
+  const campaignList = CAMPAIGN_LIST.map((item, index) => (
+    <CampaignItem key={index} data={item} />
   ));
 
   return (
     <React.Fragment>
       <H3>
-        <FormattedMessage {...messages.headerResults} />
+        {campaignList.length} <FormattedMessage {...messages.headerResults} />
       </H3>
       <WrapperList>
         {campaignList}

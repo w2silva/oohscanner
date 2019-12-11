@@ -10,11 +10,15 @@ import React, { memo } from 'react';
 
 import { FormattedMessage } from 'react-intl';
 import { Grid, Row, Col } from 'react-flexbox-grid';
+import ImgCampaign1 from 'images/img-campaign-1.png';
 import Wrapper from './Wrapper';
 import CampaignItemDetails from './CampaignItemDetails';
 import CampaignPhoto from './CampaignPhoto';
 import CampaignInfos from './CampaignInfos';
 import CampaignItemMap from './CampaignItemMap';
+import Title from './Title';
+import Address from './Address';
+import MediaFormat from './MediaFormat';
 import messages from './messages';
 
 function CampaignItem() {
@@ -24,12 +28,17 @@ function CampaignItem() {
         <Row>
           <Col xs={9}>
             <CampaignItemDetails>
-              <CampaignPhoto />
+              <CampaignPhoto src={ImgCampaign1} />
               <CampaignInfos>
-                <FormattedMessage {...messages.header} />
-                <FormattedMessage {...messages.header} />
-                <FormattedMessage {...messages.header} />
-                <FormattedMessage {...messages.header} />
+                <Title>
+                  <FormattedMessage {...messages.header} />
+                </Title>
+                <Address>
+                  <FormattedMessage {...messages.header} />
+                </Address>
+                <MediaFormat>
+                  <FormattedMessage {...messages.mediaFormat} />&nbsp;<FormattedMessage {...messages.header} />
+                </MediaFormat>
               </CampaignInfos>
             </CampaignItemDetails>
           </Col>

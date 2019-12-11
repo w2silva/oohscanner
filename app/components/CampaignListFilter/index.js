@@ -11,22 +11,24 @@ import React, { memo } from 'react';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
 import Wrapper from './Wrapper';
-import AccordionFilterHeader from './AccordionFilterHeader';
 import AccordionFilter from './AccordionFilter';
+import AccordionFilterOne from './AccordionFilterOne';
 
 function CampaignListFilter() {
   return (
     <React.Fragment>
       <Wrapper>
-        <AccordionFilterHeader title={'Conexões'}>
-          <AccordionFilter />
-        </AccordionFilterHeader>
-        <AccordionFilterHeader title={'Horários de partida'}>
-          <AccordionFilter />
-        </AccordionFilterHeader>
-        <AccordionFilterHeader title={'Duração da viagem'}>
-          <AccordionFilter />
-        </AccordionFilterHeader>
+        <AccordionFilter title={'Conexões'}>
+          <AccordionFilterOne />
+        </AccordionFilter>
+
+        <AccordionFilter title={'Horários de partida'}>
+          <AccordionFilterOne />
+        </AccordionFilter>
+        
+        <AccordionFilter title={'Duração da viagem'}>
+          <AccordionFilterOne />
+        </AccordionFilter>
       </Wrapper>
     </React.Fragment>
   );

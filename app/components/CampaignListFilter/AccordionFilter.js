@@ -10,18 +10,22 @@ import React, { memo } from 'react';
 
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
-import AccordionFilterWrapper from './AccordionFilterWrapper';
-import Label from './Label';
+import styles from './styles';
 
-function AccordionFilter() {
+function AccordionFilter({
+  title,
+  children
+}) {
   return (
     <React.Fragment>
-      <AccordionFilterWrapper>
-        <Label>
-          <input type="checkbox" /> Direto
-        </Label>
-        <small>R$ 649</small>
-      </AccordionFilterWrapper>
+      <div styles={styles.accordionToggle}>
+        <div styles={styles.accordionText}>
+          <div styles={styles.accordionWrapper}>
+            {title}
+          </div>
+        </div>
+      </div>
+      {React.Children.toArray(children)}
     </React.Fragment>
   );
 }

@@ -13,4 +13,8 @@ export default defineMessages({
     id: `${scope}.header`,
     defaultMessage: 'This is the CampaignItem component!',
   },
+  mediaFormat: {
+    id: `${scope}.media-format`,
+    defaultMessage: 'Format:',
+  },
 });

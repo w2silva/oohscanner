@@ -8,6 +8,8 @@ import NavBar from './NavBar';
 import HeaderLink from './HeaderLink';
 import Banner from './banner.jpg';
 import Wrapper from './Wrapper';
+import Button from './Button';
+import NavRight from './NavRight';
 import LogoImage from 'images/logoh.png';
 import messages from './messages';
 
@@ -24,9 +26,11 @@ function Header() {
             </Col>
             <Col xs={6}></Col>
             <Col xs={3}>
-              <A href="https://www.reactboilerplate.com/">
-                <span>Entrar</span>
-              </A>
+              <NavRight>
+                <Button onClick={() => null}>
+                  <span>Entrar</span>
+                </Button>
+              </NavRight>
             </Col>
           </Row>
         </Grid>
