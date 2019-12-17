@@ -18,10 +18,10 @@ function Header() {
     <React.Fragment>
       <Wrapper>
         <Grid>
-          <Row middle={'xs'}>
+          <Row between="xs" middle={'xs'}>
             <Col xs={3}>
               <A href="https://www.reactboilerplate.com/">
-                <Img src={LogoImage} alt="react-boilerplate - Logo" />
+                <Img src={LogoImage} alt="Logo" />
               </A>
             </Col>
             <Col xs={6}></Col>

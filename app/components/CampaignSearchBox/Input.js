@@ -1,6 +1,6 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-const Input = styled.input`
+export const inputStyle = css`
   display: block;
   width: 100%;
   outline: none;
@@ -19,4 +19,6 @@ const Input = styled.input`
   appearance: none;
 `;
 
-export default Input;
+export default styled.input`
+  ${inputStyle};
+`;
