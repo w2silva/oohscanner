@@ -59,7 +59,7 @@ export function HomePage({
   return (
     <React.Fragment>
       <Helmet>
-        <title>Oohscanner</title>
+        <title>Home</title>
       </Helmet>
       <div>
         <Section>
@@ -72,11 +72,11 @@ export function HomePage({
         <Section>
           <Grid>
             <Row>
-              <Col xs={4}>
+              <Col xs={12} sm={4}>
                 <AnnounceMedias />
                 <CampaignListFilter />
               </Col>
-              <Col xs={8}>
+              <Col xs={12} sm={8}>
                 <CampaignList />
               </Col>
             </Row>

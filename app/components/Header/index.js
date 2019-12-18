@@ -19,13 +19,13 @@ function Header() {
       <Wrapper>
         <Grid>
           <Row between="xs" middle={'xs'}>
-            <Col xs={3}>
+            <Col xs={12} sm={3}>
               <A href="https://www.reactboilerplate.com/">
                 <Img src={LogoImage} alt="Logo" />
               </A>
             </Col>
-            <Col xs={6}></Col>
-            <Col xs={3}>
+            <Col xs={12} sm={6}></Col>
+            <Col xs={12} sm={3}>
               <NavRight>
                 <Button onClick={() => null}>
                   <span>Entrar</span>

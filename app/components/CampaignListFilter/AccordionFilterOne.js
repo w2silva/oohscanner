@@ -6,26 +6,21 @@
 
 import React, { memo } from 'react';
 // import PropTypes from 'prop-types';
-// import styled from 'styled-components';
-
-import { FormattedMessage } from 'react-intl';
-import messages from './messages';
+import { AccordionCheckbox, Label, Input } from './styles';
 
 function AccordionFilterOne() {
   return (
     <React.Fragment>
-      <div>
-        <div>
-          <input type="checkbox" /> <label>Direto</label>
-        </div>
-        <small>R$ 649</small>
-      </div>
-      <div>
-        <div>
-          <input type="checkbox" /> <label>Direto</label>
-        </div>
-        <small>R$ 649</small>
-      </div>
+      <AccordionCheckbox>
+        <Label>
+          <Input type="checkbox" />&nbsp;<span>Direto</span>
+        </Label>
+      </AccordionCheckbox>
+      <AccordionCheckbox>
+        <Label>
+          <Input type="checkbox" />&nbsp;<span>Direto</span>
+        </Label>
+      </AccordionCheckbox>
     </React.Fragment>
   );
 }

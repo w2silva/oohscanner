@@ -45,7 +45,7 @@ function CampaignSearchBox({
           </H1>
           <Form onSubmit={onSubmitForm}>
             <Row>
-              <Col xs={4}>
+              <Col xs={12} sm={4}>
                 <FormGroup>
                   <FormLabel htmlFor="username">Tipo de Midia</FormLabel>
                   <Select
@@ -62,13 +62,13 @@ function CampaignSearchBox({
                   </Select>
                 </FormGroup>
               </Col>
-              <Col xs={4}>
+              <Col xs={12} sm={4}>
                 <FormGroup>
                   <FormLabel htmlFor="username">Região (selectionar no mapa)</FormLabel>
                   <InputRegion />
                 </FormGroup>
               </Col>
-              <Col xs={2}>
+              <Col xs={12} sm={2}>
                 <FormGroup>
                   <FormLabel htmlFor="username">Periodo</FormLabel>
                   <DatePicker
@@ -77,7 +77,7 @@ function CampaignSearchBox({
                   />
                 </FormGroup>
               </Col>
-              <Col xs={2}>
+              <Col xs={12} sm={2}>
                 <FormGroup>
                   <FormLabel htmlFor="username">&nbsp;</FormLabel>
                   <DatePicker

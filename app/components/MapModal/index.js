@@ -5,9 +5,11 @@
  */
 
 import React, { memo, useEffect } from 'react';
+import { compose, withProps } from "recompose"
 // import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 import ReactModal from 'react-modal';
+import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps";
 
 const customStyles = {
   overlay: {
@@ -34,22 +36,7 @@ const customStyles = {
   }
 };
 
-function MapModal() {
-
-  let mapComponent = null
-  useEffect(() => {
-    mapComponent = new google.maps.Map(document.getElementById('map'), {
-      center: {
-        lat: -34.397, 
-        lng: 150.644
-      },
-      zoom: 8
-    });
-
-    return () => {
-      // do nothing
-    }
-  })
+function MapModal(props) {
 
   return (
     <React.Fragment>
@@ -152,7 +139,12 @@ function MapModal() {
         data={
           { background: "green" }
         /* Additional data attributes (optional). */}>
-          <div id="map"></div>
+          <GoogleMap
+            defaultZoom={8}
+            defaultCenter={{ lat: -34.397, lng: 150.644 }}
+          >
+            {props.isMarkerShown && <Marker position={{ lat: -34.397, lng: 150.644 }} />}
+          </GoogleMap>
       </ReactModal>
     </React.Fragment>
   );
@@ -160,4 +152,14 @@ function MapModal() {
 
 MapModal.propTypes = {};
 
-export default memo(MapModal);
+export default compose(
+  withProps({
+    googleMapURL: "https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyD9iZakpz6MnlaF_G7iIl19nH590R2WesM&libraries=geometry,drawing,places", 
+    loadingElement: <div style={{ width: '100%', height: `100%` }} />, 
+    containerElement: <div style={{ width: '100%', height: `400px` }} />, 
+    mapElement: <div style={{ width: '100%', height: `100%` }} />, 
+  }), 
+  withScriptjs,
+  withGoogleMap,
+  memo
+)(MapModal);

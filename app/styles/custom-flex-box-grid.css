@@ -1,0 +1,14 @@
+/* custom-flex-box-grid.css */
+
+@import 'flexboxgrid/src/css/flexboxgrid.css';
+
+:root {
+  --gutter-width: 0;
+}
+
+@media only screen and (min-width: 1200px) {
+  .container {
+    width: 1048px;
+    max-width: 100%;
+  }
+}

@@ -125,7 +125,7 @@ function InputRegion() {
         <i 
           className="fa fa-map fa-lg fa-fw" 
           onClick={() => setOpenMapModalState(true) }></i>
-        {openMapModalState && <MapModal />}
+        {openMapModalState && <MapModal isMarkerShown/>}
       </Wrapper>
     </React.Fragment>
   );
