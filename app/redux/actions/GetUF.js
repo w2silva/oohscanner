@@ -1,13 +1,13 @@
 /*
- * GetMediasActions
+ * GetUFActions
  *
  */
 
 import { 
-  GET_MEDIAS, 
-  GET_MEDIAS_SUCCESS, 
-  GET_MEDIAS_FAILURE 
-} from 'redux/constants/GetMedias';
+  GET_UF, 
+  GET_UF_SUCCESS, 
+  GET_UF_FAILURE 
+} from 'redux/constants/GetUF';
 
 /**
  * Changes the input field of the form
@@ -16,9 +16,9 @@ import {
  *
  * @return {object} An action object with a type of CHANGE_USERNAME
  */
-export function getMediasAction(uf) {
+export function getUFAction(uf) {
   return {
-    type: GET_MEDIAS,
+    type: GET_UF,
     uf,
   };
 }
@@ -30,10 +30,10 @@ export function getMediasAction(uf) {
  *
  * @return {object} An action object with a type of CHANGE_USERNAME
  */
-export function getMediasSuccessAction(medias) {
+export function getUFSuccessAction(UF) {
   return {
-    type: GET_MEDIAS_SUCCESS,
-    medias,
+    type: GET_UF_SUCCESS,
+    UF,
   };
 }
 
@@ -44,9 +44,9 @@ export function getMediasSuccessAction(medias) {
  *
  * @return {object} An action object with a type of CHANGE_USERNAME
  */
-export function getMediasFailureAction(error) {
+export function getUFFailureAction(error) {
   return {
-    type: GET_MEDIAS_FAILURE,
+    type: GET_UF_FAILURE,
     error,
   };
 }

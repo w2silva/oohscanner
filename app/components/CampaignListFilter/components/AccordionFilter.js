@@ -6,7 +6,7 @@
 
 import React, { memo } from 'react';
 // import PropTypes from 'prop-types';
-import { AccordionWrapper, AccordionToggle, AccordionText } from './styles';
+import { AccordionWrapper, AccordionToggle, AccordionText } from '../styles';
 
 function AccordionFilter({
   title,

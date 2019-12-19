@@ -6,7 +6,7 @@
 
 import React, { memo } from 'react';
 // import PropTypes from 'prop-types';
-import { AccordionCheckbox, Label, Input } from './styles';
+import { AccordionCheckbox, Label, Input } from '../styles';
 
 function AccordionFilterOne() {
   return (

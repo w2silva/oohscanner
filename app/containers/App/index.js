@@ -8,7 +8,11 @@
 
 import React from 'react';
 import { Helmet } from 'react-helmet';
-import { Switch, Route } from 'react-router-dom';
+import { 
+  HashRouter as Router, 
+  Switch, 
+  Route 
+} from 'react-router-dom';
 
 import HomePage from 'containers/HomePage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
@@ -25,11 +29,13 @@ export default function App() {
       >
         <meta name="description" content="Oohscanner" />
       </Helmet>
-      <Header />
-      <Switch>
-        <Route exact path="/" component={HomePage} />
-        <Route path="" component={NotFoundPage} />
-      </Switch>
+      <Router>
+        <Header />
+        <Switch>
+          <Route exact path="/" component={HomePage} />
+          <Route path="" component={NotFoundPage} />
+        </Switch>
+      </Router>
       <GlobalStyle />
     </AppWrapper>
   );

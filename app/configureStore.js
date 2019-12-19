@@ -5,7 +5,18 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import { routerMiddleware } from 'connected-react-router';
 import createSagaMiddleware from 'redux-saga';
+
+/* Reducers */
 import createReducer from './reducers';
+import getCidadesReducer from 'redux/reducers/GetCidades';
+import getListarCidadesReducer from 'redux/reducers/GetListarCidades';
+import getListarTiposMidiaReducer from 'redux/reducers/GetListarTiposMidia';
+import getMediasReducer from 'redux/reducers/GetMedias';
+import getTiposMidiaReducer from 'redux/reducers/GetTiposMidia';
+import getUFReducer from 'redux/reducers/GetUF';
+
+/* Sagas */
+import rootSaga from 'redux/sagas';
 
 export default function configureStore(initialState = {}, history) {
   let composeEnhancers = compose;
@@ -44,7 +55,16 @@ export default function configureStore(initialState = {}, history) {
 
   // Extensions
   store.runSaga = sagaMiddleware.run;
-  store.injectedReducers = {}; // Reducer registry
+  store.runSaga(rootSaga);
+
+  store.injectedReducers = {
+    getCidades: getCidadesReducer,
+    getListarCidades: getListarCidadesReducer,
+    getListarTiposMidia: getListarTiposMidiaReducer,
+    getMedias: getMediasReducer,
+    getTiposMidia: getTiposMidiaReducer,
+    getUF: getUFReducer,
+  }; // Reducer registry
   store.injectedSagas = {}; // Saga registry
 
   // Make reducers hot reloadable, see http://mxs.is/googmo

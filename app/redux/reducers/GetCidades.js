@@ -1,49 +1,49 @@
 /*
- * GetMediasReducer
+ * GetCidadesReducer
  *
  */
 
 import produce from 'immer';
 import { 
-  GET_MEDIAS, 
-  GET_MEDIAS_SUCCESS, 
-  GET_MEDIAS_FAILURE 
-} from 'redux/constants/GetMedias';
+  GET_CIDADES, 
+  GET_CIDADES_SUCCESS, 
+  GET_CIDADES_FAILURE 
+} from 'redux/constants/GetCidades';
 
 // The initial state of the App
 export const initialState = {
   uf: '',
   fetching: false,
-  medias: [], 
+  Cidades: [], 
   error: null
 };
 
 /* eslint-disable default-case, no-param-reassign */
-const getMediasReducer = (state = initialState, action) =>
+const getCidadesReducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
 
-      case GET_MEDIAS:
+      case GET_CIDADES:
         draft.uf = action.uf;
         draft.fetching = true;
-        draft.medias = [];
+        draft.Cidades = [];
         draft.error = null;
         break;
 
-      case GET_MEDIAS_SUCCESS:
+      case GET_CIDADES_SUCCESS:
         draft.uf = action.uf;
         draft.fetching = false;
-        draft.medias = action.medias;
+        draft.Cidades = action.Cidades;
         draft.error = null;
         break;
 
-      case GET_MEDIAS_FAILURE:
+      case GET_CIDADES_FAILURE:
         draft.uf = action.uf;
         draft.fetching = false;
-        draft.medias = [];
+        draft.Cidades = [];
         draft.error = action.error;
         break;
     }
   });
 
-export default getMediasReducer;
+export default getCidadesReducer;

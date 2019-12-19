@@ -1,0 +1,8 @@
+/*
+ * GetListarCidadesConstants
+ *
+ */
+
+export const GET_LISTAR_CIDADES = 'app/GET_LISTAR_CIDADES';
+export const GET_LISTAR_CIDADES_SUCCESS = 'app/GET_LISTAR_CIDADES_SUCCESS';
+export const GET_LISTAR_CIDADES_FAILURE = 'app/GET_LISTAR_CIDADES_FAILURE';

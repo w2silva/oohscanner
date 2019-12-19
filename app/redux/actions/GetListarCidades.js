@@ -1,13 +1,13 @@
 /*
- * GetMediasActions
+ * GetListarCidadesActions
  *
  */
 
 import { 
-  GET_MEDIAS, 
-  GET_MEDIAS_SUCCESS, 
-  GET_MEDIAS_FAILURE 
-} from 'redux/constants/GetMedias';
+  GET_LISTAR_CIDADES, 
+  GET_LISTAR_CIDADES_SUCCESS, 
+  GET_LISTAR_CIDADES_FAILURE 
+} from 'redux/constants/GetListarCidades';
 
 /**
  * Changes the input field of the form
@@ -16,9 +16,9 @@ import {
  *
  * @return {object} An action object with a type of CHANGE_USERNAME
  */
-export function getMediasAction(uf) {
+export function getListarCidadesAction(uf) {
   return {
-    type: GET_MEDIAS,
+    type: GET_LISTAR_CIDADES,
     uf,
   };
 }
@@ -30,10 +30,10 @@ export function getMediasAction(uf) {
  *
  * @return {object} An action object with a type of CHANGE_USERNAME
  */
-export function getMediasSuccessAction(medias) {
+export function getListarCidadesSuccessAction(ListarCidades) {
   return {
-    type: GET_MEDIAS_SUCCESS,
-    medias,
+    type: GET_LISTAR_CIDADES_SUCCESS,
+    ListarCidades,
   };
 }
 
@@ -44,9 +44,9 @@ export function getMediasSuccessAction(medias) {
  *
  * @return {object} An action object with a type of CHANGE_USERNAME
  */
-export function getMediasFailureAction(error) {
+export function getListarCidadesFailureAction(error) {
   return {
-    type: GET_MEDIAS_FAILURE,
+    type: GET_LISTAR_CIDADES_FAILURE,
     error,
   };
 }

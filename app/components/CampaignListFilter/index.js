@@ -6,23 +6,23 @@
 
 import React, { memo } from 'react';
 // import PropTypes from 'prop-types';
-import Wrapper from './Wrapper';
-import AccordionFilter from './AccordionFilter';
-import AccordionFilterOne from './AccordionFilterOne';
+import Wrapper from './components/Wrapper';
+import AccordionFilter from './components/AccordionFilter';
+import AccordionFilterOne from './components/AccordionFilterOne';
 
 function CampaignListFilter() {
   return (
     <React.Fragment>
       <Wrapper>
-        <AccordionFilter title={'Conexões'}>
+        <AccordionFilter title={'Filtro 1'}>
           <AccordionFilterOne />
         </AccordionFilter>
 
-        <AccordionFilter title={'Horários de partida'}>
+        <AccordionFilter title={'Filtro 2'}>
           <AccordionFilterOne />
         </AccordionFilter>
         
-        <AccordionFilter title={'Duração da viagem'}>
+        <AccordionFilter title={'Filtro  3'}>
           <AccordionFilterOne />
         </AccordionFilter>
       </Wrapper>
