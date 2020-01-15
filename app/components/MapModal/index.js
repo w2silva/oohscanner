@@ -4,148 +4,33 @@
  *
  */
 
-import React, { memo, useEffect } from 'react';
-import { compose, withProps } from "recompose"
-// import PropTypes from 'prop-types';
-// import styled from 'styled-components';
-import ReactModal from 'react-modal';
-import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps";
-
-const customStyles = {
-  overlay: {
-    position: "fixed",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: "rgba(255, 255, 255, 0.75)"
-  },
-  content: {
-    position: "absolute",
-    top: "40px",
-    left: "40px",
-    right: "40px",
-    bottom: "40px",
-    border: "1px solid #ccc",
-    background: "#fff",
-    overflow: "auto",
-    WebkitOverflowScrolling: "touch",
-    borderRadius: "4px",
-    outline: "none",
-    padding: "20px"
-  }
-};
+import React, { memo } from 'react';
+import { compose } from "recompose";
+import GoogleMapReact from "google-map-react";
 
 function MapModal(props) {
+  const defaultProps = {
+    center: props.center || {
+      lat: props.lat || 41.633,
+      lng: props.lng || -71.222
+    },
+    zoom: props.zoom || 11,
+    styles: props.styles || [],
+    layerTypes: props.layerTypes || []
+  }
 
   return (
     <React.Fragment>
-      <ReactModal
-        isOpen={
-          true
-        /* Boolean describing if the modal should be shown or not. */}
-
-        closeTimeoutMS={
-          0
-        /* Number indicating the milliseconds to wait before closing
-          the modal. */}
-
-        style={
-          customStyles
-        /* Object indicating styles to be used for the modal.
-          It has two keys, `overlay` and `content`.
-          See the `Styles` section for more details. */}
-
-        contentLabel={
-          "Example Modal"
-        /* String indicating how the content container should be announced
-          to screenreaders */}
-
-        portalClassName={
-          "ReactModalPortal"
-        /* String className to be applied to the portal.
-          See the `Styles` section for more details. */}
-
-        overlayClassName={
-          "ReactModal__Overlay"
-        /* String className to be applied to the overlay.
-          See the `Styles` section for more details. */}
-
-        id={
-          "some-id"
-        /* String id to be applied to the content div. */}
-
-        className={
-          "ReactModal__Content"
-        /* String className to be applied to the modal content.
-          See the `Styles` section for more details. */}
-
-        bodyOpenClassName={
-          "ReactModal__Body--open"
-        /* String className to be applied to the document.body 
-          (must be a constant string).
-          This attribute when set as `null` doesn't add any class 
-          to document.body.
-          See the `Styles` section for more details. */}
-
-        htmlOpenClassName={
-          "ReactModal__Html--open"
-        /* String className to be applied to the document.html
-          (must be a constant string).
-          This attribute is `null` by default.
-          See the `Styles` section for more details. */}
-
-        ariaHideApp={
-          true
-        /* Boolean indicating if the appElement should be hidden */}
-
-        shouldFocusAfterRender={
-          true
-        /* Boolean indicating if the modal should be focused after render. */}
-
-        shouldCloseOnOverlayClick={
-          true
-        /* Boolean indicating if the overlay should close the modal */}
-
-        shouldCloseOnEsc={
-          true
-        /* Boolean indicating if pressing the esc key should close the modal
-          Note: By disabling the esc key from closing the modal
-          you may introduce an accessibility issue. */}
-
-        shouldReturnFocusAfterClose={
-          true
-        /* Boolean indicating if the modal should restore focus to the element
-          that had focus prior to its display. */}
-
-        role={
-          "dialog"
-        /* String indicating the role of the modal, allowing the 'dialog' role
-          to be applied if desired.
-          This attribute is `dialog` by default. */}
-
-        parentSelector={
-          () => document.body
-        /* Function that will be called to get the parent element
-          that the modal will be attached to. */}
-
-        aria={
-          {
-            labelledby: "heading",
-            describedby: "full_description"
-          }
-        /* Additional aria attributes (optional). */}
-
-        data={
-          { background: "green" }
-        /* Additional data attributes (optional). */}>
-          <GoogleMap
-            defaultZoom={8}
-            defaultCenter={{ lat: -34.397, lng: 150.644 }}
-          >
-            {props.isMarkerShown && <Marker position={{ lat: -34.397, lng: 150.644 }} />}
-          </GoogleMap>
-      </ReactModal>
+      <GoogleMapReact
+        bootstrapURLKeys={{
+          key: props.apiKey ? props.apiKey : "you need an API key!"
+        }}
+        defaultCenter={defaultProps.center}
+        defaultZoom={defaultProps.zoom}
+        layerTypes={defaultProps.layerTypes}
+        options={{ styles: defaultProps.styles }}
+      >
+      </GoogleMapReact>
     </React.Fragment>
   );
 }
@@ -153,13 +38,5 @@ function MapModal(props) {
 MapModal.propTypes = {};
 
 export default compose(
-  withProps({
-    googleMapURL: "https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyD9iZakpz6MnlaF_G7iIl19nH590R2WesM&libraries=geometry,drawing,places", 
-    loadingElement: <div style={{ width: '100%', height: `100%` }} />, 
-    containerElement: <div style={{ width: '100%', height: `400px` }} />, 
-    mapElement: <div style={{ width: '100%', height: `100%` }} />, 
-  }), 
-  withScriptjs,
-  withGoogleMap,
   memo
 )(MapModal);

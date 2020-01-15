@@ -3,10 +3,9 @@ import { createGlobalStyle } from 'styled-components';
 const GlobalStyle = createGlobalStyle`
   html,
   body {
-    height: 100%;
+    height: auto;
     width: 100%;
     line-height: 1.5;
-    background-color: #f1f2f8;
   }
 
   body {
@@ -16,6 +15,7 @@ const GlobalStyle = createGlobalStyle`
   body.fontLoaded {
     font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     color: #02122c;
+    background-color: #f1f2f8;
   }
 
   #app {
@@ -54,6 +54,15 @@ const GlobalStyle = createGlobalStyle`
     -moz-appearance: none;
     appearance: none;
   }
+
+  /* overrides and helpers go here */
+  .mvh-100 {
+    min-height: 100vh;
+  }
+  .mvh-90 {
+    min-height: 90vh;
+  }
+
 `;
 
 export default GlobalStyle;

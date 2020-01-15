@@ -8,6 +8,9 @@ import React, { memo, useState } from 'react';
 import Autocomplete from 'react-autocomplete';
 import Wrapper from './Wrapper';
 import MapModal from 'components/MapModal';
+import bootstrap from "bootstrap"; // eslint-disable-line no-unused-vars
+import 'components/../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import $ from 'jquery';
 
 const getStates = () => {
   return [
@@ -64,6 +67,84 @@ const getStates = () => {
   ]
 }
 
+var hideModal = hideModalInfo => {
+  $("#myModal").modal("hide");
+};
+
+const googleMapsApiKey = "AIzaSyD9iZakpz6MnlaF_G7iIl19nH590R2WesM";
+
+const modalMapStyles = [
+  {
+    featureType: "landscape.natural",
+    elementType: "geometry.fill",
+    stylers: [
+      {
+        visibility: "on"
+      },
+      {
+        color: "#e0efef"
+      }
+    ]
+  },
+  {
+    featureType: "poi",
+    elementType: "geometry.fill",
+    stylers: [
+      {
+        visibility: "on"
+      },
+      {
+        hue: "#1900ff"
+      },
+      {
+        color: "#c0e8e8"
+      }
+    ]
+  },
+  {
+    featureType: "road",
+    elementType: "geometry",
+    stylers: [
+      {
+        lightness: 100
+      },
+      {
+        visibility: "simplified"
+      }
+    ]
+  },
+  {
+    featureType: "road",
+    elementType: "labels",
+    stylers: [
+      {
+        visibility: "off"
+      }
+    ]
+  },
+  {
+    featureType: "transit.line",
+    elementType: "geometry",
+    stylers: [
+      {
+        visibility: "on"
+      },
+      {
+        lightness: 700
+      }
+    ]
+  },
+  {
+    featureType: "water",
+    elementType: "all",
+    stylers: [
+      {
+        color: "#7dcdcd"
+      }
+    ]
+  }
+];
+
 function InputRegion() {
 
   const [valueState, setValueState] = useState('')
@@ -88,7 +169,10 @@ function InputRegion() {
     <React.Fragment>
       <Wrapper>
         <Autocomplete
-          inputProps={{ id: 'states-autocomplete' }}
+          inputProps={{ 
+            id: 'states-autocomplete', 
+            placeholder: 'Digite sua cidade ou estado' 
+          }}
           wrapperStyle={{
             position: 'relative'
           }}
@@ -123,9 +207,56 @@ function InputRegion() {
           )}
         />
         <i 
-          className="fa fa-map fa-lg fa-fw" 
-          onClick={() => setOpenMapModalState(true) }></i>
-        {openMapModalState && <MapModal isMarkerShown/>}
+          className="fa fa-map fa-lg fa-fw"
+          data-toggle="modal"
+          data-target="#myModal"></i>
+        <div className="modal" tabIndex="-1" role="dialog" id="myModal">
+          <div
+            className="modal-dialog modal-lg mvh-90 w-100 d-flex flex-column"
+            role="document"
+          >
+            <div className="modal-content flex-grow-1">
+              <div className="modal-header">
+                <h5 className="modal-title">Selecionar no Mapa</h5>
+                <button
+                  type="button"
+                  className="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div className="modal-body p-0 h-100">
+                <div className="h-100 w-100 position-absolute">
+                  {/*modal map is defined here- custom styles and zoom are passed in*/}
+                  <MapModal
+                    apiKey={googleMapsApiKey}
+                    center={[42.302, -71.033]}
+                    styles={modalMapStyles}
+                    zoom={13}
+                  />
+                </div>
+              </div>
+              <div className="modal-footer text-right">
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={hideModal}
+                >
+                  Cancelar
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-success"
+                  onClick={hideModal}
+                >
+                  Confirmar
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </Wrapper>
     </React.Fragment>
   );

@@ -1,10 +1,11 @@
 // a library to wrap and simplify api calls
 import apisauce from 'apisauce'
 import base64 from 'base-64'
+import md5 from 'md5'
 const __DEV__ = true
 
 // our "constructor"
-const create = (baseURL = process.env.API_SERVER) => {
+const create = (baseURL = 'http://planetooh.ddns.net:9400/') => {
 
   const api = apisauce.create({
     // base URL is read from the "constructor"
@@ -27,8 +28,12 @@ const create = (baseURL = process.env.API_SERVER) => {
     })
 
   const apiRequest = (request) => {
-    const identify = `${CNPJ_DA_EMPRESA}@Request_Token_AUTORIZED_PLANETOOH_api&19/12/2019`
-    return api.get(base64.encode(`${identify}${request}`))
+    const cnpjDaEmpresa = '77610743000108';
+    const identify = md5(`${cnpjDaEmpresa}@Request_Token_AUTORIZED_PLANETOOH_api&10/01/2020`)
+
+    const identifyBase64 = base64.encode(identify)
+    const requestBase64 = base64.encode(request)
+    return api.get(`${identifyBase64}/${requestBase64}`)
   }
 
   const getUF = () => {

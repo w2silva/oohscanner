@@ -1,0 +1,105 @@
+/**
+ *
+ * SearchBox
+ *
+ */
+
+import React, { memo } from 'react';
+import { Grid, Row, Col } from 'react-flexbox-grid';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
+import InputRegion from 'components/InputRegion';
+import {
+  Wrapper, 
+  Container,
+  H1, 
+  Form,
+  FormGroup,
+  FormLabel,
+  FlareBar,
+  Select,
+  Button,
+  StyledDatePicker
+} from '../styles';
+
+function SearchBox({ 
+  mediaType, 
+  region, 
+  startDate, 
+  endDate, 
+  onChangeMediaType, 
+  onChangeRegion, 
+  onChangeStartDate, 
+  onChangeEndDate, 
+  onSubmitForm 
+}) {
+
+  return (
+    <React.Fragment>
+      <Wrapper>
+        <Container>
+          <Grid>
+            <H1>
+              Onde Vamos Anunciar ?
+            </H1>
+            <Form onSubmit={onSubmitForm}>
+              <Row>
+                <Col xs={12} sm={6} md={4}>
+                  <FormGroup>
+                    <FormLabel htmlFor="mediaType">Tipo de Midia</FormLabel>
+                    <Select
+                      id="mediaType"
+                      type="text"
+                      placeholder="mxstbr"
+                      value={mediaType}
+                      onChange={onChangeMediaType}
+                    >
+                      <option value="">Selection um tipo de mídia</option>
+                      <option value="">Midia 1</option>
+                      <option value="">Midia 2</option>
+                      <option value="">Midia 3</option>
+                    </Select>
+                  </FormGroup>
+                </Col>
+                <Col xs={12} sm={6} md={4}>
+                  <FormGroup>
+                    <FormLabel htmlFor="region">Região (selectionar no mapa)</FormLabel>
+                    <InputRegion />
+                  </FormGroup>
+                </Col>
+                <Col xs={12} sm={6} md={4}>
+                  <FormGroup>
+                    <FormLabel htmlFor="startDate">Periodo</FormLabel>
+                    <StyledDatePicker>
+                      <DatePicker
+                        selected={startDate}
+                        onChange={onChangeStartDate}
+                      />
+                      <DatePicker
+                        selected={endDate}
+                        onChange={onChangeEndDate}
+                      />
+                    </StyledDatePicker>
+                  </FormGroup>
+                </Col>
+              </Row>
+              <FormGroup align={'right'}>
+                <Button type={'submit'}>Buscar</Button>
+              </FormGroup>
+            </Form>
+          </Grid>
+        </Container>
+        <FlareBar>
+          <svg viewBox="0 0 14832 55" className="bpk-flare-bar_bpk-flare-bar__curve__3z1de">
+            <path d="M7501.307 8.517l-68.043 39.341c-10.632 6.185-23.795 6.185-34.528 0l-68.144-39.34c-8.91-5.173-18.988-8.215-29.316-8.518H0v55h14832V0H7530.671a63.604 63.604 0 0 0-29.364 8.517z"></path>
+          </svg>
+        </FlareBar>
+      </Wrapper>
+    </React.Fragment>
+  );
+}
+
+SearchBox.propTypes = {};
+
+export default memo(SearchBox);
