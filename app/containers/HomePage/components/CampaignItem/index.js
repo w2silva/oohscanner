@@ -5,15 +5,14 @@
  */
 
 import React, { memo } from 'react';
-// import PropTypes from 'prop-types';
-// import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 import { FormattedMessage } from 'react-intl';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import ImgCampaign1 from 'images/img-campaign-1.png';
 import Wrapper from './Wrapper';
 import CampaignItemDetails from './CampaignItemDetails';
-import CampaignPhoto from './CampaignPhoto';
+import CampaignPhoto, { Img } from './CampaignPhoto';
 import CampaignInfos from './CampaignInfos';
 import CampaignItemMap from './CampaignItemMap';
 import Title from './Title';
@@ -21,33 +20,38 @@ import Address from './Address';
 import MediaFormat from './MediaFormat';
 import messages from './messages';
 
-function CampaignItem({ onClickItem }) {
+function CampaignItem({ 
+  data, 
+  onClickItem 
+}) {
   return (
     <React.Fragment>
-      <Wrapper onClick={onClickItem}>
+      <Wrapper 
+        isActivated={data.ACTIVED}
+        onClick={onClickItem}>
         <Row>
           <Col xs={12} sm={9}>
             <CampaignItemDetails>
-              <CampaignPhoto src={ImgCampaign1} alt="Photo" />
+              <CampaignPhoto>
+                <Img 
+                  src={`http://planetooh.ddns.net/${data.FTO}`} 
+                  alt={data.COD} />
+              </CampaignPhoto>
               <CampaignInfos>
                 <Title>
-                  Campaign name
+                  <i className="fa fa-lightbulb-o fa-fw"></i>&nbsp;{data.COD}
                 </Title>
-                <Address>
-                  Av Paulista 1000 - São Paulo/SP
-                </Address>
+                <Address>{data.LOC.toLowerCase()}</Address>
                 <MediaFormat>
-                  <i className="fa fa-home fa-fw"></i>&nbsp;<span>Attribute name</span><br />
-                  <i className="fa fa-home fa-fw"></i>&nbsp;<span>Attribute name</span>
+                  <i className="fa fa-television fa-fw"></i>&nbsp;<span>{data.TIP}</span>
+                  <i className="fa fa-lightbulb-o fa-fw"></i>&nbsp;
+                  <span>{data.ILM == 'S' ? 'Iluminado' : 'Não Iluminado'}</span>
                 </MediaFormat>
               </CampaignInfos>
             </CampaignItemDetails>
           </Col>
           <Col xs={12} sm={3}>
-            <center>
-              <small>Map Position</small>
-            </center>
-            <CampaignItemMap />
+            <CampaignItemMap lat={data.LAT} lat={data.LON} />
           </Col>
         </Row>
       </Wrapper>
@@ -55,6 +59,21 @@ function CampaignItem({ onClickItem }) {
   );
 }
 
-CampaignItem.propTypes = {};
+CampaignItem.propTypes = {
+  data: PropTypes.shape({
+    ID: PropTypes.string.isRequired,
+    COD: PropTypes.string.isRequired,
+    UF: PropTypes.string.isRequired,
+    CID: PropTypes.string.isRequired,
+    LOC: PropTypes.string.isRequired,
+    BAI: PropTypes.string.isRequired,
+    LAT: PropTypes.string.isRequired,
+    LON: PropTypes.string.isRequired,
+    VLR: PropTypes.string.isRequired,
+    TIP: PropTypes.string.isRequired,
+    ILM: PropTypes.string.isRequired,
+    FTO: PropTypes.string.isRequired
+  })
+};
 
 export default memo(CampaignItem);

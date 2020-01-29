@@ -12,9 +12,8 @@ import {
 
 // The initial state of the App
 export const initialState = {
-  uf: '',
+  statesWithMedias: [],
   fetching: false,
-  medias: [], 
   error: null
 };
 
@@ -24,23 +23,20 @@ const getUFReducer = (state = initialState, action) =>
     switch (action.type) {
 
       case GET_UF:
-        draft.uf = action.uf;
         draft.fetching = true;
-        draft.medias = [];
+        draft.statesWithMedias = [];
         draft.error = null;
         break;
 
       case GET_UF_SUCCESS:
-        draft.uf = action.uf;
         draft.fetching = false;
-        draft.medias = action.medias;
+        draft.statesWithMedias = action.statesWithMedias;
         draft.error = null;
         break;
 
       case GET_UF_FAILURE:
-        draft.uf = action.uf;
         draft.fetching = false;
-        draft.medias = [];
+        draft.statesWithMedias = [];
         draft.error = action.error;
         break;
     }

@@ -71,7 +71,7 @@ var hideModal = hideModalInfo => {
   $("#myModal").modal("hide");
 };
 
-const googleMapsApiKey = "AIzaSyD9iZakpz6MnlaF_G7iIl19nH590R2WesM";
+const googleMapsApiKey = "AIzaSyClACizHU3nG5Nw6VIdwZcyMBq9SOzIhg4";
 
 const modalMapStyles = [
   {
@@ -145,7 +145,9 @@ const modalMapStyles = [
   }
 ];
 
-function InputRegion() {
+function InputRegion({
+  defaultStates
+}) {
 
   const [valueState, setValueState] = useState('')
   const [itemListState, setItemListState] = useState([])
@@ -160,8 +162,8 @@ function InputRegion() {
   }
   const fakeRequest = (value, cb) => {
     return setTimeout(cb, 500, value ?
-      getStates().filter(state => matchStateToTerm(state, value)) :
-      getStates()
+      defaultStates.filter(state => matchStateToTerm(state, value)) :
+      defaultStates
     )
   }
 

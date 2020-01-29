@@ -24,6 +24,8 @@ import {
 } from '../styles';
 
 function SearchBox({ 
+  mediaTypesList,
+  statesList,
   mediaType, 
   region, 
   startDate, 
@@ -34,6 +36,10 @@ function SearchBox({
   onChangeEndDate, 
   onSubmitForm 
 }) {
+
+  const optionsMedias = mediaTypesList.map((mediaType, index) => (
+    <option key={index} value={mediaType.TIP}>{mediaType.TIP}</option>
+  ))
 
   return (
     <React.Fragment>
@@ -55,17 +61,15 @@ function SearchBox({
                       value={mediaType}
                       onChange={onChangeMediaType}
                     >
-                      <option value="">Selection um tipo de mídia</option>
-                      <option value="">Midia 1</option>
-                      <option value="">Midia 2</option>
-                      <option value="">Midia 3</option>
+                      <option value={null}>Selecione um tipo de mídia</option>
+                      {optionsMedias}
                     </Select>
                   </FormGroup>
                 </Col>
                 <Col xs={12} sm={6} md={4}>
                   <FormGroup>
                     <FormLabel htmlFor="region">Região (selectionar no mapa)</FormLabel>
-                    <InputRegion />
+                    <InputRegion defaultStates={statesList} />
                   </FormGroup>
                 </Col>
                 <Col xs={12} sm={6} md={4}>

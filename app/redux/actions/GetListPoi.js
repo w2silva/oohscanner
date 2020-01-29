@@ -1,13 +1,13 @@
 /*
- * GetTiposMidiaActions
+ * GetListPoiActions
  *
  */
 
 import { 
-  GET_TIPOS_MIDIA, 
-  GET_TIPOS_MIDIA_SUCCESS, 
-  GET_TIPOS_MIDIA_FAILURE 
-} from 'redux/constants/GetTiposMidia';
+  GET_LIST_POI, 
+  GET_LIST_POI_SUCCESS, 
+  GET_LIST_POI_FAILURE 
+} from 'redux/constants/GetListPoi';
 
 /**
  * Changes the input field of the form
@@ -16,9 +16,9 @@ import {
  *
  * @return {object} An action object with a type of CHANGE_USERNAME
  */
-export function getTiposMidiaAction() {
+export function getListPoiAction() {
   return {
-    type: GET_TIPOS_MIDIA
+    type: GET_LIST_POI
   };
 }
 
@@ -29,10 +29,10 @@ export function getTiposMidiaAction() {
  *
  * @return {object} An action object with a type of CHANGE_USERNAME
  */
-export function getTiposMidiaSuccessAction(mediaTypes) {
+export function getListPoiSuccessAction(pois) {
   return {
-    type: GET_TIPOS_MIDIA_SUCCESS,
-    mediaTypes
+    type: GET_LIST_POI_SUCCESS,
+    pois
   };
 }
 
@@ -43,9 +43,9 @@ export function getTiposMidiaSuccessAction(mediaTypes) {
  *
  * @return {object} An action object with a type of CHANGE_USERNAME
  */
-export function getTiposMidiaFailureAction(error) {
+export function getListPoiFailureAction(error) {
   return {
-    type: GET_TIPOS_MIDIA_FAILURE,
+    type: GET_LIST_POI_FAILURE,
     error
   };
 }

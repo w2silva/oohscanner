@@ -17,10 +17,13 @@ import {
 import HomePage from 'containers/HomePage/Loadable';
 import ResumePage from 'containers/ResumePage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
-import Header from 'components/Header';
 import GlobalStyle from '../../global-styles';
 import AppWrapper from './AppWrapper';
 
+/**
+ * Componente que contextualiza e engloba toda a aplicação
+ * apartir daqui as principais requisições são feitas.
+ */
 export default function App() {
   return (
     <AppWrapper>
@@ -31,7 +34,6 @@ export default function App() {
         <meta name="description" content="Oohscanner" />
       </Helmet>
       <Router>
-        <Header />
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route exact path="/resume" component={ResumePage} />

@@ -8,9 +8,13 @@ import Wrapper from './components/Wrapper';
 import Button from './components/Button';
 import NavRight from './components/NavRight';
 import LogoImage from 'images/logoh.png';
+import { ShoppingCart } from './styles';
 import messages from './messages';
 
-function Header() {
+function Header({
+  history,
+  mediasCounter
+}) {
   return (
     <React.Fragment>
       <Wrapper>
@@ -23,8 +27,14 @@ function Header() {
             </Col>
             <Col xs={6}>
               <NavRight>
-                <Button onClick={() => null}>
-                  <span>Entrar</span>
+                <ShoppingCart>
+                  <i className="fa fa-shopping-cart fa-fw fa-lg"></i>
+                  <span className="badget">{mediasCounter}</span>
+                </ShoppingCart>
+                <Button onClick={() => {
+                  history.push('/resume');
+                }}>
+                  <span>Finalizar compra</span>
                 </Button>
               </NavRight>
             </Col>

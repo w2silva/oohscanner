@@ -6,6 +6,6 @@ export default styled.div`
   height: auto;
 
   @media ${device.laptop} {
-    padding: 10px 10px 10px 170px;
+    padding: 10px 10px 10px 190px;
   }
 `;

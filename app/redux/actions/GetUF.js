@@ -16,10 +16,9 @@ import {
  *
  * @return {object} An action object with a type of CHANGE_USERNAME
  */
-export function getUFAction(uf) {
+export function getUFAction() {
   return {
-    type: GET_UF,
-    uf,
+    type: GET_UF
   };
 }
 
@@ -30,10 +29,10 @@ export function getUFAction(uf) {
  *
  * @return {object} An action object with a type of CHANGE_USERNAME
  */
-export function getUFSuccessAction(UF) {
+export function getUFSuccessAction(statesWithMedias) {
   return {
     type: GET_UF_SUCCESS,
-    UF,
+    statesWithMedias,
   };
 }
 

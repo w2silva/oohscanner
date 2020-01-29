@@ -3,8 +3,10 @@
  */
 
 import { createStore, applyMiddleware, compose } from 'redux';
+import { persistStore, persistReducer } from 'redux-persist';
 import { routerMiddleware } from 'connected-react-router';
 import createSagaMiddleware from 'redux-saga';
+import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
 
 /* Reducers */
 import createReducer from './reducers';
@@ -12,8 +14,6 @@ import getCidadesReducer from 'redux/reducers/GetCidades';
 import getListarCidadesReducer from 'redux/reducers/GetListarCidades';
 import getListarTiposMidiaReducer from 'redux/reducers/GetListarTiposMidia';
 import getMediasReducer from 'redux/reducers/GetMedias';
-import getTiposMidiaReducer from 'redux/reducers/GetTiposMidia';
-import getUFReducer from 'redux/reducers/GetUF';
 
 /* Sagas */
 import rootSaga from 'redux/sagas';
@@ -47,11 +47,22 @@ export default function configureStore(initialState = {}, history) {
 
   const enhancers = [applyMiddleware(...middlewares)];
 
-  const store = createStore(
+  const persistedReducer = persistReducer(
+    {
+      key: 'root',
+      storage,
+    },
     createReducer(),
+  );
+
+  const store = createStore(
+    persistedReducer,
+    // createReducer(),
     initialState,
     composeEnhancers(...enhancers),
   );
+
+  const persistor = persistStore(store);
 
   // Extensions
   store.runSaga = sagaMiddleware.run;
@@ -62,8 +73,6 @@ export default function configureStore(initialState = {}, history) {
     getListarCidades: getListarCidadesReducer,
     getListarTiposMidia: getListarTiposMidiaReducer,
     getMedias: getMediasReducer,
-    getTiposMidia: getTiposMidiaReducer,
-    getUF: getUFReducer,
   }; // Reducer registry
   store.injectedSagas = {}; // Saga registry
 
@@ -75,5 +84,5 @@ export default function configureStore(initialState = {}, history) {
     });
   }
 
-  return store;
+  return { store, persistor };
 }

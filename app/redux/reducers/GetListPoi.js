@@ -1,45 +1,45 @@
 /*
- * GetTiposMidiaReducer
+ * GetListPoiReducer
  *
  */
 
 import produce from 'immer';
 import { 
-  GET_TIPOS_MIDIA, 
-  GET_TIPOS_MIDIA_SUCCESS, 
-  GET_TIPOS_MIDIA_FAILURE 
-} from 'redux/constants/GetTiposMidia';
+  GET_LIST_POI, 
+  GET_LIST_POI_SUCCESS, 
+  GET_LIST_POI_FAILURE 
+} from 'redux/constants/GetListPoi';
 
 // The initial state of the App
 export const initialState = {
-  mediaTypes: [],
+  pois: [],
   fetching: false,
   error: null
 };
 
 /* eslint-disable default-case, no-param-reassign */
-const getTiposMidiaReducer = (state = initialState, action) =>
+const getListPoiReducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
 
-      case GET_TIPOS_MIDIA:
+      case GET_LIST_POI:
         draft.fetching = true;
-        draft.mediaTypes = [];
+        draft.pois = [];
         draft.error = null;
         break;
 
-      case GET_TIPOS_MIDIA_SUCCESS:
+      case GET_LIST_POI_SUCCESS:
         draft.fetching = false;
-        draft.mediaTypes = action.mediaTypes;
+        draft.pois = action.pois;
         draft.error = null;
         break;
 
-      case GET_TIPOS_MIDIA_FAILURE:
+      case GET_LIST_POI_FAILURE:
         draft.fetching = false;
-        draft.mediaTypes = [];
+        draft.pois = [];
         draft.error = action.error;
         break;
     }
   });
 
-export default getTiposMidiaReducer;
+export default getListPoiReducer;

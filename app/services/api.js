@@ -2,10 +2,10 @@
 import apisauce from 'apisauce'
 import base64 from 'base-64'
 import md5 from 'md5'
-const __DEV__ = true
+import { format } from 'date-fns'
 
 // our "constructor"
-const create = (baseURL = 'http://planetooh.ddns.net:9400/') => {
+const create = (baseURL = 'http://79.143.178.171/get.php') => {
 
   const api = apisauce.create({
     // base URL is read from the "constructor"
@@ -29,11 +29,23 @@ const create = (baseURL = 'http://planetooh.ddns.net:9400/') => {
 
   const apiRequest = (request) => {
     const cnpjDaEmpresa = '77610743000108';
-    const identify = md5(`${cnpjDaEmpresa}@Request_Token_AUTORIZED_PLANETOOH_api&10/01/2020`)
+    const formattedDate = format(new Date(), 'dd/MM/yyyy')
 
-    const identifyBase64 = base64.encode(identify)
+    const identify = `${cnpjDaEmpresa}@Request_Token_AUTORIZED_PLANETOOH_api&${formattedDate}`
+    const identifyMD5 = md5(identify)
+    const identifyUpperCase = identifyMD5.toUpperCase()
+
+    const identifyBase64 = base64.encode(identifyUpperCase)
     const requestBase64 = base64.encode(request)
-    return api.get(`${identifyBase64}/${requestBase64}`)
+
+    console.log(`${request} -----------------------`)
+    console.log(`MD5: ${identifyUpperCase}`)
+    console.log(`Date: ${formattedDate}`)
+    console.log(`Raw request: ${identify}/${request}`)
+    console.log(`MD5 request: ${identifyMD5}/${request}`)
+    console.log(`All request: ${identifyBase64}/${requestBase64}`)
+    
+    return api.get('', { p: `${identifyBase64}/${requestBase64}` })
   }
 
   const getUF = () => {
@@ -42,6 +54,14 @@ const create = (baseURL = 'http://planetooh.ddns.net:9400/') => {
 
   const getCidades = () => {
     return apiRequest(`GetCidades/UF`)
+  }
+
+  const getListaMidias = () => {
+    return apiRequest(`GetListaMidias`)
+  }
+
+  const getListPoi = () => {
+    return apiRequest(`GetListPoi`)
   }
 
   const getMedias = () => {
@@ -82,6 +102,8 @@ const create = (baseURL = 'http://planetooh.ddns.net:9400/') => {
     getMedias,
     getMediasFromBairro,
     getTiposMidia,
+    getListaMidias,
+    getListPoi,
     getListarTiposMidiaFromUF,
     getListarTiposMidiaFromCidade,
     getListarTiposMidiaFromBairro,

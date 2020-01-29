@@ -11,6 +11,8 @@ import {
 } from '../styles';
 
 function ModalCampaignsFilter({
+  mediaTypesList,
+  mediaTagsList, 
   onDismissModal
 }) {
   return (
@@ -33,7 +35,10 @@ function ModalCampaignsFilter({
                 </a>
               </div>
               <div className="modal-body">
-                <CampaignsFilter showOnMobile={true} />
+                <CampaignsFilter 
+                  mediaTypesList={mediaTypesList}
+                  mediaTagsList={mediaTagsList}
+                  showOnMobile={false} />
               </div>
             </div>
           </div>
