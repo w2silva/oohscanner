@@ -1,42 +1,22 @@
 /**
  *
- * CampaignList
+ * MediasList
  *
  */
 
-import React, { memo, useState, useEffect } from 'react';
+import React, { memo, useState } from 'react';
 import PropTypes from 'prop-types';
-import InfiniteScroll from 'react-infinite-scroller';
-import { FormattedMessage } from 'react-intl';
 import {
   H3,
   StyledWrapperList
 } from '../styles';
+import MediaItem from './MediaItem';
 
-import CampaignItem from './CampaignItem';
-
-const CAMPAIGN_LIST = [{
-  activate: false, 
-  title: 'test'
-},{
-  activate: false, 
-  title: 'test'
-},{
-  activate: false, 
-  title: 'test'
-},{
-  activate: false, 
-  title: 'test'
-},{
-  activate: false, 
-  title: 'test'
-}]
-
-const noMediaList = () => (
+const noMediasList = () => (
   <div className="loader" key={0}>Loading ...</div>
 );
 
-function CampaignList({
+function MediasList({
   filteredMediaType,
   filteredMediaTag,
   filteredAddress,
@@ -63,12 +43,14 @@ function CampaignList({
     ))
   }
 
-  if (filteredMediaIlluminated !== null) {
-    mediasList = mediasList.filter((media) => media.ILM == filteredMediaIlluminated)
+  if (filteredMediaIlluminated === true) {
+    mediasList = mediasList.filter((media) => media.ILM === 'S')
+  } else {
+    mediasList = mediasList.filter((media) => media.ILM === 'N')
   }
 
   let campaignList = mediasList.map((media, index) => (
-    <CampaignItem 
+    <MediaItem 
       key={index} 
       data={media} 
       onClickItem={(event) => {
@@ -86,7 +68,7 @@ function CampaignList({
         <div style={{ minHeight: '200px' }}>
           {campaignList.length > 0 
           ? <>{campaignList}</>
-          : noMediaList()}
+          : noMediasList()}
         </div>
       </StyledWrapperList>
     </React.Fragment>
@@ -107,8 +89,8 @@ function CampaignList({
   {campaignList}
 </InfiniteScroll>*/
 
-CampaignList.propTypes = {
+MediasList.propTypes = {
   mediasList: PropTypes.array.isRequired
 };
 
-export default memo(CampaignList);
+export default memo(MediasList);

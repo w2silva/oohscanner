@@ -29,7 +29,7 @@ function Header({
               <NavRight>
                 <ShoppingCart>
                   <i className="fa fa-shopping-cart fa-fw fa-lg"></i>
-                  <span className="badget">{mediasCounter}</span>
+                  {mediasCounter > 0 && <span className="badget">{mediasCounter}</span>}
                 </ShoppingCart>
                 <Button onClick={() => {
                   history.push('/resume');

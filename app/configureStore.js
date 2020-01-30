@@ -14,13 +14,21 @@ import getCidadesReducer from 'redux/reducers/GetCidades';
 import getListarCidadesReducer from 'redux/reducers/GetListarCidades';
 import getListarTiposMidiaReducer from 'redux/reducers/GetListarTiposMidia';
 import getMediasReducer from 'redux/reducers/GetMedias';
+import getUFReducer from 'redux/reducers/GetUF';
+import getTiposMidiaReducer from 'redux/reducers/GetTiposMidia';
+import getListaMidiasReducer from 'redux/reducers/GetListaMidias';
+import getListPoiReducer from 'redux/reducers/GetListPoi';
 
 /* Sagas */
 import rootSaga from 'redux/sagas';
 
 export default function configureStore(initialState = {}, history) {
   let composeEnhancers = compose;
-  const reduxSagaMonitorOptions = {};
+  const reduxSagaMonitorOptions = {
+    onError: (error, { sagaStack }) => {
+      console.log(error, sagaStack);
+    },
+  };
 
   // If Redux Dev Tools and Saga Dev Tools Extensions are installed, enable them
   /* istanbul ignore next */
@@ -51,13 +59,19 @@ export default function configureStore(initialState = {}, history) {
     {
       key: 'root',
       storage,
+      blacklist: ['getMediasList']
     },
-    createReducer(),
+    createReducer({
+      getCitiesList: getCidadesReducer,
+      getMediaTypes: getTiposMidiaReducer,
+      getMediasList: getListaMidiasReducer,
+      getListPoi: getListPoiReducer,
+    }),
   );
 
   const store = createStore(
     persistedReducer,
-    // createReducer(),
+    //createReducer(),
     initialState,
     composeEnhancers(...enhancers),
   );
@@ -68,13 +82,10 @@ export default function configureStore(initialState = {}, history) {
   store.runSaga = sagaMiddleware.run;
   store.runSaga(rootSaga);
 
-  store.injectedReducers = {
-    getCidades: getCidadesReducer,
-    getListarCidades: getListarCidadesReducer,
-    getListarTiposMidia: getListarTiposMidiaReducer,
-    getMedias: getMediasReducer,
-  }; // Reducer registry
-  store.injectedSagas = {}; // Saga registry
+  // Reducer registry
+  store.injectedReducers = {};
+  // Saga registry
+  store.injectedSagas = {};
 
   // Make reducers hot reloadable, see http://mxs.is/googmo
   /* istanbul ignore next */

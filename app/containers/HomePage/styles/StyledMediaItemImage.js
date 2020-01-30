@@ -20,4 +20,5 @@ export default styled.div`
   width: 180px;
   height: 140px;
   float: left;
+  border: solid 1px #ddd;
 `;

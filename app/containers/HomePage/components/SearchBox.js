@@ -25,7 +25,7 @@ import {
 
 function SearchBox({ 
   mediaTypesList,
-  statesList,
+  citiesList,
   mediaType, 
   region, 
   startDate, 
@@ -37,8 +37,10 @@ function SearchBox({
   onSubmitForm 
 }) {
 
-  const optionsMedias = mediaTypesList.map((mediaType, index) => (
-    <option key={index} value={mediaType.TIP}>{mediaType.TIP}</option>
+  const optionsMedias = mediaTypesList.map((item, index) => (
+    <option key={index} value={item.TIP}>
+      {item.TIP}
+    </option>
   ))
 
   return (
@@ -58,18 +60,19 @@ function SearchBox({
                       id="mediaType"
                       type="text"
                       placeholder="mxstbr"
+                      defaultValue={null} 
                       value={mediaType}
                       onChange={onChangeMediaType}
                     >
-                      <option value={null}>Selecione um tipo de mídia</option>
+                      <option value={null}>TODAS</option>
                       {optionsMedias}
                     </Select>
                   </FormGroup>
                 </Col>
                 <Col xs={12} sm={6} md={4}>
                   <FormGroup>
-                    <FormLabel htmlFor="region">Região (selectionar no mapa)</FormLabel>
-                    <InputRegion defaultStates={statesList} />
+                    <FormLabel htmlFor="region">Região (selecionar no mapa)</FormLabel>
+                    <InputRegion defaultCities={citiesList} />
                   </FormGroup>
                 </Col>
                 <Col xs={12} sm={6} md={4}>

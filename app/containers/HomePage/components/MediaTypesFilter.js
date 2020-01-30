@@ -14,18 +14,20 @@ import {
 
 function MediaTypesFilter({
   mediaTypes,
+  mediaType, 
   onFilteredMediaTypeChange
 }) {
-  const accordionCheckboxs = mediaTypes.map((mediaType, index) => (
+  const accordionCheckboxs = mediaTypes.map((item, index) => (
     <AccordionCheckbox key={index}>
       <Label>
         <Checkbox 
           type={'radio'}
           name={'media_type_filter'}
-          value={mediaType.TIP}
+          value={item.TIP}
+          checked={mediaType === item.TIP ? true : false}
           onChange={onFilteredMediaTypeChange}
           />
-        <span>&nbsp;{mediaType.TIP}</span>
+        <span>&nbsp;{item.TIP}</span>
       </Label>
     </AccordionCheckbox>
   ));

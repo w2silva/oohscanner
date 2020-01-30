@@ -19,34 +19,12 @@ const IlluminatedFilter = ({
     <AccordionCheckbox>
       <Label>
         <Checkbox 
-          type={'radio'}
+          type={'checkbox'}
           name={'illuminated_filter'}
-          value={null}
-          onChange={onFilteredMediaIlluminatedChange}
-          />
-        <span>&nbsp;QUALQUER UM</span>
-      </Label>
-    </AccordionCheckbox>
-    <AccordionCheckbox>
-      <Label>
-        <Checkbox 
-          type={'radio'}
-          name={'illuminated_filter'}
-          value={'S'}
+          value={'1'}
           onChange={onFilteredMediaIlluminatedChange}
           />
         <span>&nbsp;Sim</span>
-      </Label>
-    </AccordionCheckbox>
-    <AccordionCheckbox>
-      <Label>
-        <Checkbox 
-          type={'radio'}
-          name={'illuminated_filter'}
-          value={'N'}
-          onChange={onFilteredMediaIlluminatedChange}
-          />
-        <span>&nbsp;Não</span>
       </Label>
     </AccordionCheckbox>
   </React.Fragment>

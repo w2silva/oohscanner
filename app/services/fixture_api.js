@@ -44,6 +44,13 @@ const getListarCidades = () => {
   }
 }
 
+const getCidades = () => {
+  return {
+    ok: true,
+    data: require('../fixtures/cities.js')
+  }
+}
+
 const getTiposMidia = () => {
   return {
     ok: true,
@@ -77,6 +84,7 @@ export default {
   setToken,
   getToken,
 
+  getCidades,
   getListarCidades,
   getMedias,
   getMediasFromBairro,

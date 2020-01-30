@@ -16,10 +16,9 @@ import {
  *
  * @return {object} An action object with a type of CHANGE_USERNAME
  */
-export function getCidadesAction(uf) {
+export function getCidadesAction() {
   return {
-    type: GET_CIDADES,
-    uf,
+    type: GET_CIDADES
   };
 }
 
@@ -30,10 +29,10 @@ export function getCidadesAction(uf) {
  *
  * @return {object} An action object with a type of CHANGE_USERNAME
  */
-export function getCidadesSuccessAction(Cidades) {
+export function getCidadesSuccessAction(cities) {
   return {
     type: GET_CIDADES_SUCCESS,
-    Cidades,
+    cities
   };
 }
 
@@ -47,6 +46,6 @@ export function getCidadesSuccessAction(Cidades) {
 export function getCidadesFailureAction(error) {
   return {
     type: GET_CIDADES_FAILURE,
-    error,
+    error
   };
 }

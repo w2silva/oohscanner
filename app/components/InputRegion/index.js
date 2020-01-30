@@ -145,10 +145,7 @@ const modalMapStyles = [
   }
 ];
 
-function InputRegion({
-  defaultStates
-}) {
-
+function InputRegion({ defaultCities }) {
   const [valueState, setValueState] = useState('')
   const [itemListState, setItemListState] = useState([])
   const [openMapModalState, setOpenMapModalState] = useState(false)
@@ -162,8 +159,8 @@ function InputRegion({
   }
   const fakeRequest = (value, cb) => {
     return setTimeout(cb, 500, value ?
-      defaultStates.filter(state => matchStateToTerm(state, value)) :
-      defaultStates
+      defaultCities.filter(state => matchStateToTerm(state, value)) :
+      defaultCities
     )
   }
 

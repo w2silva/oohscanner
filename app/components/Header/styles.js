@@ -15,7 +15,7 @@ export const ShoppingCart = styled.div`
     width: 20px;
     height: 20px;
     border-radius: 100%;
-    background-color: #4a7771;
+    background-color: #FF5722;
     display: block;
     position: absolute;
     top: -8px;

@@ -5,7 +5,7 @@ import md5 from 'md5'
 import { format } from 'date-fns'
 
 // our "constructor"
-const create = (baseURL = 'http://79.143.178.171/get.php') => {
+const create = (baseURL = process.env.BASE_URL) => {
 
   const api = apisauce.create({
     // base URL is read from the "constructor"
@@ -53,7 +53,7 @@ const create = (baseURL = 'http://79.143.178.171/get.php') => {
   }
 
   const getCidades = () => {
-    return apiRequest(`GetCidades/UF`)
+    return apiRequest(`GetListarCidades`)
   }
 
   const getListaMidias = () => {

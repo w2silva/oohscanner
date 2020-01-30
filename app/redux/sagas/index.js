@@ -1,6 +1,5 @@
 import { takeLatest, call, put } from 'redux-saga/effects';
-// import api from 'services/api'
-import api from 'services/fixture_api'
+import { ROOT_ACTION } from 'containers/App/constants';
 import { GET_CIDADES } from 'redux/constants/GetCidades';
 import { GET_LISTAR_CIDADES } from 'redux/constants/GetListarCidades';
 import { GET_LISTAR_TIPOS_MIDIA } from 'redux/constants/GetListarTiposMidia';
@@ -9,6 +8,16 @@ import { GET_TIPOS_MIDIA } from 'redux/constants/GetTiposMidia';
 import { GET_LISTA_MIDIAS } from 'redux/constants/GetListaMidias';
 import { GET_UF } from 'redux/constants/GetUF';
 import { GET_LIST_POI } from 'redux/constants/GetListPoi';
+
+import { getTiposMidiaAction } from 'redux/actions/GetTiposMidia';
+import { getListPoiAction } from 'redux/actions/GetListPoi';
+import { getCidadesAction } from 'redux/actions/GetCidades';
+
+if (NODE_ENV === 'production') {
+  import api from 'services/api'
+} else {
+  import api from 'services/api'
+}
 
 import {
   getCidadesSuccessAction,
@@ -27,7 +36,6 @@ import {
   getMediasFailureAction
 } from 'redux/actions/GetMedias';
 import {
-  getTiposMidiaAction, 
   getTiposMidiaSuccessAction,
   getTiposMidiaFailureAction
 } from 'redux/actions/GetTiposMidia';
@@ -47,6 +55,13 @@ import {
 /**
  * Github repos request/res handler
  */
+export function* rootSaga() {
+  yield put(getTiposMidiaAction());
+}
+
+/**
+ * Github repos request/res handler
+ */
 export function* getCidadesSaga(action) {
   // make the call to the api
   const res = yield call(api.getCidades)
@@ -55,8 +70,12 @@ export function* getCidadesSaga(action) {
     // extract product
     const { data } = res
 
-    // dispatch action login success
-    yield put(getCidadesSuccessAction())
+    if (data !== null && data['Cidades']) {
+      // dispatch action login success
+      yield put(getCidadesSuccessAction((data['Cidades'] || [])))
+    } else {
+      yield put(getCidadesFailureAction(data['MENSAGEM']))
+    }
   } else if (res.problem === 'NETWORK_ERROR' || res.status === 401) {
     yield put(getCidadesFailureAction())
   } else if (res.status >= 400 || res.status <= 500) {
@@ -241,6 +260,7 @@ export function* getListPoiSaga() {
  */
 export default function* root() {
 
+  yield takeLatest(ROOT_ACTION, rootSaga);
   yield takeLatest(GET_CIDADES, getCidadesSaga);
   yield takeLatest(GET_LISTAR_CIDADES, getListarCidadesSaga);
   yield takeLatest(GET_LISTAR_TIPOS_MIDIA, getListarTiposMidiaSaga);

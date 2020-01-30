@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export default styled.div`
+  cursor: pointer;
   position: relative;
   display: block;
   background-color: #fff;
@@ -9,9 +10,8 @@ export default styled.div`
   border-radius: .375rem;
   color: #111236;
 
-  padding: 5px;
+  padding: 0px;
   margin: 0px 0px 20px 0px;
   text-decoration: none;
-  cursor: pointer;
   z-index: 0;
 `;

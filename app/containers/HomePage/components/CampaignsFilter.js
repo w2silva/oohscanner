@@ -17,6 +17,7 @@ import { StyledWrapperFilter } from '../styles';
 function CampaignsFilter({ 
   mediaTypesList, 
   mediaTagsList, 
+  mediaType, 
   showOnMobile,
   onMediaTypeChange,
   onMediaTagChange,
@@ -34,6 +35,7 @@ function CampaignsFilter({
         <Accordion title={'Tipos de Mídia'}>
           <MediaTypesFilter 
             mediaTypes={mediaTypesList}
+            mediaType={mediaType}
             onFilteredMediaTypeChange={onMediaTypeChange} />
         </Accordion>
         <Accordion title={'Pontos de Interesse'}>
