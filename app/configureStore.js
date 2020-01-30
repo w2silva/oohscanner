@@ -18,6 +18,7 @@ import getUFReducer from 'redux/reducers/GetUF';
 import getTiposMidiaReducer from 'redux/reducers/GetTiposMidia';
 import getListaMidiasReducer from 'redux/reducers/GetListaMidias';
 import getListPoiReducer from 'redux/reducers/GetListPoi';
+import selectedMediasReducer from 'redux/reducers/SelectedMedias';
 
 /* Sagas */
 import rootSaga from 'redux/sagas';
@@ -59,13 +60,14 @@ export default function configureStore(initialState = {}, history) {
     {
       key: 'root',
       storage,
-      blacklist: ['getMediasList']
+      blacklist: ['getMediasList', 'selectedMediasReducer']
     },
     createReducer({
       getCitiesList: getCidadesReducer,
       getMediaTypes: getTiposMidiaReducer,
       getMediasList: getListaMidiasReducer,
       getListPoi: getListPoiReducer,
+      selectedMedias: selectedMediasReducer,
     }),
   );
 

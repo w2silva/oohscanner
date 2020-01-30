@@ -115,7 +115,8 @@ module.exports = options => ({
       NODE_ENV: 'development',
     }),
     new webpack.DefinePlugin({
-      'process.env.BASE_URL': JSON.stringify(process.env.BASE_URL),
+      //'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+      'process.env.BASE_URL': JSON.stringify(process.env.BASE_URL)
     }),
     new webpack.NormalModuleReplacementPlugin(
       /node_modules\/flexboxgrid\/dist\/flexboxgrid\.css/,

@@ -21,6 +21,7 @@ import makeSelectGetListaMidias, {
   selectMediasList 
 } from 'redux/selectors/GetListaMidias';
 import makeSelectGetListPoi from 'redux/selectors/GetListPoi';
+import makeSelectSelectedMedias from 'redux/selectors/SelectedMedias';
 
 import Header from 'components/Header';
 import SearchBox from './components/SearchBox';
@@ -30,6 +31,7 @@ import ModalCampaignsFilter from './components/ModalCampaignsFilter';
 
 import { rootAction } from 'containers/App/actions';
 import { getListaMidiasAction } from 'redux/actions/GetListaMidias';
+import { addSelectedMediaAction, removeSelectedMediaAction } from 'redux/actions/SelectedMedias';
 import { Section, ButtonFilter } from './styles';
 
 export function HomePage({
@@ -39,6 +41,7 @@ export function HomePage({
   getMediaTypes,
   getMediasList,
   getListPoi,
+  selectedMedias, 
   statesWithMedias,
   mediasList
 }) {
@@ -49,7 +52,6 @@ export function HomePage({
   const [regionState, setRegionState] = useState(null);
   const [startDateState, setStartDateState] = useState(new Date());
   const [endDateState, setEndDateState] = useState(new Date());
-  const [mediasCounterState, setMediasCounterState] = useState(0);
 
   useEffect(() => {
     console.log('componentWillMount')
@@ -103,9 +105,13 @@ export function HomePage({
   };
 
   const handleItemClick = item => {
-    item.ACTIVED = !item.ACTIVED
-    const counter = mediasList.filter((media) => media.ACTIVED === true).length
-    setMediasCounterState(counter)
+    if (item.ACTIVED === true) {
+      item.ACTIVED = false;
+      dispatch(removeSelectedMediaAction(item));
+    } else {
+      item.ACTIVED = true
+      dispatch(addSelectedMediaAction(item));
+    }
   }
 
   function handleDismissModal() {
@@ -122,6 +128,8 @@ export function HomePage({
     return false;
   }
 
+  const { selectedMediasList } = selectedMedias
+
   return (
     <React.Fragment>
       <Helmet>
@@ -129,7 +137,7 @@ export function HomePage({
       </Helmet>
       <Header 
         history={history}
-        mediasCounter={mediasCounterState} />
+        mediasCounter={selectedMediasList.length} />
       <div>
         <Section>
           <SearchBox
@@ -206,6 +214,7 @@ HomePage.propTypes = {
   getMediaTypes: PropTypes.object.isRequired,
   getMediasList: PropTypes.object.isRequired,
   getListPoi: PropTypes.object.isRequired,
+  selectedMedias: PropTypes.object.isRequired,
   statesWithMedias: PropTypes.array.isRequired,
   mediasList: PropTypes.array.isRequired,
 };
@@ -216,6 +225,7 @@ const mapStateToProps = createStructuredSelector({
   getMediaTypes: makeSelectGetTiposMidia(),
   getMediasList: makeSelectGetListaMidias(),
   getListPoi: makeSelectGetListPoi(),
+  selectedMedias: makeSelectSelectedMedias(),
   statesWithMedias: selectStatesWithMedias(),
   mediasList: selectMediasList(),
 });

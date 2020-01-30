@@ -13,11 +13,10 @@ import { getTiposMidiaAction } from 'redux/actions/GetTiposMidia';
 import { getListPoiAction } from 'redux/actions/GetListPoi';
 import { getCidadesAction } from 'redux/actions/GetCidades';
 
-if (NODE_ENV === 'production') {
-  import api from 'services/api'
-} else {
-  import api from 'services/api'
-}
+import Api from 'services/api'
+import FixtureApi from 'services/fixture_api'
+
+const api = process.env.NODE_ENV === 'production' ? Api : FixtureApi;
 
 import {
   getCidadesSuccessAction,
