@@ -62,7 +62,9 @@ function MediasList({
   return (
     <React.Fragment>
       <H3>
-        {campaignList.length} Espaços encontrados
+        {campaignList.length > 0 
+        ? `${campaignList.length} Espaços encontrados`
+        : 'Nenhum espaço encontrado'}
       </H3>
       <StyledWrapperList>
         <div style={{ minHeight: '200px' }}>

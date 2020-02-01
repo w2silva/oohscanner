@@ -27,7 +27,7 @@ function MediaTypesFilter({
           checked={mediaType === item.TIP ? true : false}
           onChange={onFilteredMediaTypeChange}
           />
-        <span>&nbsp;{item.TIP}</span>
+        <span>{' '}{item.TIP}</span>
       </Label>
     </AccordionCheckbox>
   ));
@@ -42,7 +42,7 @@ function MediaTypesFilter({
             value={null}
             onChange={onFilteredMediaTypeChange}
             />
-          <span>&nbsp;TODAS</span>
+          <span>{' '}TODAS</span>
         </Label>
       </AccordionCheckbox>
       {accordionCheckboxs}

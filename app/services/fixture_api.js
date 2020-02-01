@@ -40,7 +40,7 @@ const getMediasFromBairro = () => {
 const getListarCidades = () => {
   return {
     ok: true,
-    data: {}
+    data: require('../fixtures/ListCities.js')
   }
 }
 
@@ -79,6 +79,15 @@ const getListarTiposMidiaFromBairro = () => {
   }
 }
 
+const setCliente = () => {
+  return {
+    ok: true,
+    data: {
+      ID: '123456',
+    }
+  }
+}
+
 export default {
   // a list of the API functions from step 2
   setToken,
@@ -95,4 +104,5 @@ export default {
   getListarTiposMidiaFromCidade,
   getListarTiposMidiaFromBairro,
   getUF,
+  setCliente
 }

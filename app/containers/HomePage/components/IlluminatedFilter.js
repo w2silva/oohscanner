@@ -24,7 +24,7 @@ const IlluminatedFilter = ({
           value={'1'}
           onChange={onFilteredMediaIlluminatedChange}
           />
-        <span>&nbsp;Sim</span>
+        <span>{' '}Sim</span>
       </Label>
     </AccordionCheckbox>
   </React.Fragment>

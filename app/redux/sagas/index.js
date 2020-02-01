@@ -1,4 +1,4 @@
-import { takeLatest, call, put } from 'redux-saga/effects';
+import { takeLatest, call, put, delay } from 'redux-saga/effects';
 import { ROOT_ACTION } from 'containers/App/constants';
 import { GET_CIDADES } from 'redux/constants/GetCidades';
 import { GET_LISTAR_CIDADES } from 'redux/constants/GetListarCidades';
@@ -8,10 +8,13 @@ import { GET_TIPOS_MIDIA } from 'redux/constants/GetTiposMidia';
 import { GET_LISTA_MIDIAS } from 'redux/constants/GetListaMidias';
 import { GET_UF } from 'redux/constants/GetUF';
 import { GET_LIST_POI } from 'redux/constants/GetListPoi';
+import { POST_SET_CLIENTE } from 'redux/constants/SetCliente';
+import { POST_SET_PONTOS } from 'redux/constants/SetPontos';
 
 import { getTiposMidiaAction } from 'redux/actions/GetTiposMidia';
 import { getListPoiAction } from 'redux/actions/GetListPoi';
 import { getCidadesAction } from 'redux/actions/GetCidades';
+import { getListarCidadesAction } from 'redux/actions/GetListarCidades';
 
 import Api from 'services/api'
 import FixtureApi from 'services/fixture_api'
@@ -50,6 +53,15 @@ import {
   getListPoiSuccessAction,
   getListPoiFailureAction
 } from 'redux/actions/GetListPoi';
+import {
+  postSetClienteSuccessAction,
+  postSetClienteFailureAction
+} from 'redux/actions/SetCliente';
+import {
+  postSetPontosAction, 
+  postSetPontosSuccessAction,
+  postSetPontosFailureAction
+} from 'redux/actions/SetPontos';
 
 /**
  * Github repos request/res handler
@@ -61,9 +73,9 @@ export function* rootSaga() {
 /**
  * Github repos request/res handler
  */
-export function* getCidadesSaga(action) {
+export function* getCidadesSaga({ uf }) {
   // make the call to the api
-  const res = yield call(api.getCidades)
+  const res = yield call(api.getCidades, uf)
 
   if (res.ok) {
     // extract product
@@ -87,9 +99,9 @@ export function* getCidadesSaga(action) {
 /**
  * Github repos request/res handler
  */
-export function* getListarCidadesSaga(action) {
+export function* getListarCidadesSaga({ typed }) {
   // make the call to the api
-  const res = yield call(api.getListarCidades)
+  const res = yield call(api.getListarCidades, typed)
 
   if (res.ok) {
     // extract product
@@ -164,6 +176,8 @@ export function* getTiposMidiaSaga() {
     if (data !== null && data['Tipos']) {
       // dispatch action login success
       yield put(getTiposMidiaSuccessAction((data['Tipos'] || [])))
+
+      //yield put(getListPoiAction());
     } else {
       yield put(getTiposMidiaFailureAction(data['MENSAGEM']))
     }
@@ -214,6 +228,7 @@ export function* getListaMidiasSaga() {
     const { data } = res
 
     if (data !== null && data['Midias']) {
+      yield delay(1000 * 6);
       // dispatch action login success
       yield put(getListaMidiasSuccessAction((data['Midias'] || [])))
     } else {
@@ -242,6 +257,8 @@ export function* getListPoiSaga() {
     if (data !== null && data['POI']) {
       // dispatch action login success
       yield put(getListPoiSuccessAction((data['POI'] || [])))
+      // yield put(getCidadesAction('RJ'));
+      // yield put(getListarCidadesAction('São'));
     } else {
       yield put(getListPoiFailureAction(data['MENSAGEM']))
     }
@@ -251,6 +268,58 @@ export function* getListPoiSaga() {
     yield put(getListPoiFailureAction("Ocorreu uma falha inesperada!"))
   } else {
     yield put(getListPoiFailureAction("Ocorreu uma falha inesperada!"))
+  }
+}
+
+/**
+ * Github repos request/res handler
+ */
+export function* setClienteSaga({ payload }) {
+  // make the call to the api
+  const res = yield call(api.setCliente, payload)
+
+  if (res.ok) {
+    // extract product
+    const { data } = res
+
+    if (data !== null && data['Lancamento']) {
+      // dispatch action login success
+      yield put(postSetClienteSuccessAction((data['Lancamento'] || [])))
+    } else {
+      yield put(postSetClienteFailureAction(data['MENSAGEM']))
+    }
+  } else if (res.problem === 'NETWORK_ERROR' || res.status === 401) {
+    yield put(postSetClienteFailureAction())
+  } else if (res.status >= 400 || res.status <= 500) {
+    yield put(postSetClienteFailureAction("Ocorreu uma falha inesperada!"))
+  } else {
+    yield put(postSetClienteFailureAction("Ocorreu uma falha inesperada!"))
+  }
+}
+
+/**
+ * Github repos request/res handler
+ */
+export function* setPointSaga({ payload }) {
+  // make the call to the api
+  const res = yield call(api.setPoint, payload)
+
+  if (res.ok) {
+    // extract product
+    const { data } = res
+
+    if (data !== null && data['Lancamento']) {
+      // dispatch action login success
+      yield put(postSetPontosSuccessAction((data['Lancamento'] || [])))
+    } else {
+      yield put(postSetPontosFailureAction(data['MENSAGEM']))
+    }
+  } else if (res.problem === 'NETWORK_ERROR' || res.status === 401) {
+    yield put(postSetPontosFailureAction())
+  } else if (res.status >= 400 || res.status <= 500) {
+    yield put(postSetPontosFailureAction("Ocorreu uma falha inesperada!"))
+  } else {
+    yield put(postSetPontosFailureAction("Ocorreu uma falha inesperada!"))
   }
 }
 
@@ -268,4 +337,6 @@ export default function* root() {
   yield takeLatest(GET_LISTA_MIDIAS, getListaMidiasSaga);
   yield takeLatest(GET_LIST_POI, getListPoiSaga);
   yield takeLatest(GET_UF, getUFSaga);
+  yield takeLatest(POST_SET_CLIENTE, setClienteSaga);
+  yield takeLatest(POST_SET_PONTOS, setPointSaga);
 }

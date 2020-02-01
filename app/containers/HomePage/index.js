@@ -11,6 +11,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import { Grid, Row, Col } from 'react-flexbox-grid';
+import FadeIn from "react-fade-in";
 import jQuery from 'jquery';
 
 import { makeSelectLoading } from 'containers/App/selectors';
@@ -26,18 +27,21 @@ import makeSelectSelectedMedias from 'redux/selectors/SelectedMedias';
 import Header from 'components/Header';
 import SearchBox from './components/SearchBox';
 import MediasList from './components/MediasList';
-import CampaignsFilter from './components/CampaignsFilter';
-import ModalCampaignsFilter from './components/ModalCampaignsFilter';
+import MediasFilter from './components/MediasFilter';
+import ModalMediasFilter from './components/ModalMediasFilter';
+import MediasListLoading from './components/MediasListLoading';
+import MediasListEmpty from './components/MediasListEmpty';
+import Suggestiongs from './components/Suggestiongs';
 
 import { rootAction } from 'containers/App/actions';
 import { getListaMidiasAction } from 'redux/actions/GetListaMidias';
 import { addSelectedMediaAction, removeSelectedMediaAction } from 'redux/actions/SelectedMedias';
 import { Section, ButtonFilter } from './styles';
 
+
 export function HomePage({
-  history,
   dispatch,
-  getCidadesList,
+  getCities,
   getMediaTypes,
   getMediasList,
   getListPoi,
@@ -45,6 +49,7 @@ export function HomePage({
   statesWithMedias,
   mediasList
 }) {
+  let pageElement;
   const [mediaTypeState, setMediaTypeState] = useState(null);
   const [mediaTagState, setMediaTagState] = useState(null);
   const [mediaIlluminatedState, setMediaIlluminatedState] = useState(false);
@@ -52,6 +57,7 @@ export function HomePage({
   const [regionState, setRegionState] = useState(null);
   const [startDateState, setStartDateState] = useState(new Date());
   const [endDateState, setEndDateState] = useState(new Date());
+  const [submittedState, setSubmittedState] = useState(false);
 
   useEffect(() => {
     console.log('componentWillMount')
@@ -64,15 +70,10 @@ export function HomePage({
     }
   }, [])
 
-  useEffect(() => {
-    console.log('mediasList', mediasList)
-  }, [mediasList])
-
   const onChangeMediaType = mediaType => {
     if (typeof mediaType == 'string' && mediaType.length == 0)
       mediaType = null;
-    
-    console.log(mediaType)
+
     setMediaTypeState(mediaType);
   };
 
@@ -123,26 +124,76 @@ export function HomePage({
   function onSubmitForm(event) {
     event.preventDefault();
 
+    setSubmittedState(true);
     dispatch(getListaMidiasAction());
+    pageElement.scrollIntoView({
+      behavior: 'smooth',
+      block: 'end'
+    })
 
     return false;
   }
 
-  const { selectedMediasList } = selectedMedias
+  function renderMediasList() {    
+    if (mediasList.length <= 0) return (<MediasListEmpty />);
+    return (
+      <FadeIn>
+        <Row>
+          <Col xs={12} sm={3}>
+            <MediasFilter 
+              mediaTypesList={getMediaTypes.mediaTypes}
+              mediaTagsList={getListPoi.pois}
+              mediaType={mediaTypeState}
+              onMediaTypeChange={({ target }) => {
+                onChangeMediaType(target.value);
+              }}
+              onMediaTagChange={({ target }) => {
+                onChangeMediaTag(target.value);
+              }}
+              onAddressChange={({ target }) => {
+                onChangeAddress(target.value);
+              }}
+              onMediaIlluminatedChange={({ target }) => {
+                onChangeIlluminate(target.value);
+              }}
+              showOnMobile={false} />
+            <ButtonFilter 
+              type={'button'}
+              data-toggle={'modal'}
+              data-target={'#modal-campaigns-filter'}
+            >
+              <span>Filtrar</span>
+            </ButtonFilter>
+            <ModalMediasFilter 
+              mediaTypesList={getMediaTypes.mediaTypes}
+              mediaTagsList={getListPoi.pois}
+              onDismissModal={handleDismissModal} />
+          </Col>
+          <Col xs={12} sm={9}>
+            <MediasList 
+              filteredMediaType={mediaTypeState}
+              filteredMediaTag={mediaTagState}
+              filteredAddress={addressState}
+              filteredMediaIlluminated={mediaIlluminatedState}
+              mediasList={mediasList}
+              handleItemClick={handleItemClick} />
+          </Col>
+        </Row>
+      </FadeIn>
+    )
+  }
 
   return (
     <React.Fragment>
       <Helmet>
         <title>Home</title>
       </Helmet>
-      <Header 
-        history={history}
-        mediasCounter={selectedMediasList.length} />
-      <div>
+      <Header />
+      <div ref={(element) => pageElement = element}>
         <Section>
           <SearchBox
             mediaTypesList={getMediaTypes.mediaTypes}
-            citiesList={getCidadesList.cities}
+            citiesList={getCities.cities}
             mediaType={mediaTypeState}
             region={regionState}
             startDate={startDateState}
@@ -156,54 +207,17 @@ export function HomePage({
             onSubmitForm={onSubmitForm}
           />
         </Section>
-        {mediasList.length > 0 && (
-          <Section>
+        <Section>
+          {submittedState && (
             <Grid>
-              <Row>
-                <Col xs={12} sm={3}>
-                  <CampaignsFilter 
-                    mediaTypesList={getMediaTypes.mediaTypes}
-                    mediaTagsList={getListPoi.pois}
-                    mediaType={mediaTypeState}
-                    onMediaTypeChange={({ target }) => {
-                      onChangeMediaType(target.value);
-                    }}
-                    onMediaTagChange={({ target }) => {
-                      onChangeMediaTag(target.value);
-                    }}
-                    onAddressChange={({ target }) => {
-                      onChangeAddress(target.value);
-                    }}
-                    onMediaIlluminatedChange={({ target }) => {
-                      onChangeIlluminate(target.value);
-                    }}
-                    showOnMobile={false} />
-                  <ButtonFilter 
-                    type={'button'}
-                    data-toggle={'modal'}
-                    data-target={'#modal-campaigns-filter'}
-                  >
-                    <span>Filtrar</span>
-                  </ButtonFilter>
-                </Col>
-                <Col xs={12} sm={9}>
-                  <MediasList 
-                    filteredMediaType={mediaTypeState}
-                    filteredMediaTag={mediaTagState}
-                    filteredAddress={addressState}
-                    filteredMediaIlluminated={mediaIlluminatedState}
-                    mediasList={mediasList}
-                    handleItemClick={handleItemClick} />
-                </Col>
-              </Row>
+              {getMediasList.fetching === true 
+                ? <MediasListLoading />
+                : renderMediasList()
+              }
             </Grid>
-            <ModalCampaignsFilter 
-              mediaTypesList={getMediaTypes.mediaTypes}
-              mediaTagsList={getListPoi.pois}
-              onDismissModal={handleDismissModal} />
-          </Section>
-          )
-        }
+          )}
+          <Suggestiongs />
+        </Section>
       </div>
     </React.Fragment>
   );
@@ -221,7 +235,7 @@ HomePage.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
   loading: makeSelectLoading(),
-  getCidadesList: makeSelectGetCidades(),
+  getCities: makeSelectGetCidades(),
   getMediaTypes: makeSelectGetTiposMidia(),
   getMediasList: makeSelectGetListaMidias(),
   getListPoi: makeSelectGetListPoi(),

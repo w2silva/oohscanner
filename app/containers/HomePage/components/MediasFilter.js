@@ -1,6 +1,6 @@
 /**
  *
- * CampaignsFilter
+ * MediasFilter
  *
  */
 
@@ -14,7 +14,7 @@ import TagsFilter from './TagsFilter';
 import IlluminatedFilter from './IlluminatedFilter';
 import { StyledWrapperFilter } from '../styles';
 
-function CampaignsFilter({ 
+function MediasFilter({ 
   mediaTypesList, 
   mediaTagsList, 
   mediaType, 
@@ -27,7 +27,7 @@ function CampaignsFilter({
   return (
     <React.Fragment>
       <StyledWrapperFilter isMobile={showOnMobile}>
-        <Accordion title={'Endereço'}>
+        {/*<Accordion title={'Endereço'}>
           <AddressFilter 
             mediaTypes={mediaTypesList}
             onFilteredAddressChange={onAddressChange} />
@@ -37,7 +37,7 @@ function CampaignsFilter({
             mediaTypes={mediaTypesList}
             mediaType={mediaType}
             onFilteredMediaTypeChange={onMediaTypeChange} />
-        </Accordion>
+        </Accordion>*/}
         <Accordion title={'Pontos de Interesse'}>
           <TagsFilter 
             mediaTags={mediaTagsList}
@@ -53,10 +53,10 @@ function CampaignsFilter({
   );
 }
 
-CampaignsFilter.propTypes = {
+MediasFilter.propTypes = {
   mediaTypesList: PropTypes.array.isRequired,
   mediaTagsList: PropTypes.array.isRequired,
   showOnMobile: PropTypes.bool.isRequired,
 };
 
-export default memo(CampaignsFilter);
+export default memo(MediasFilter);

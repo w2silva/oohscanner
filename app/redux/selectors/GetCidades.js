@@ -2,11 +2,11 @@ import { createSelector } from 'reselect';
 import { initialState } from '../reducers/GetCidades';
 
 /**
- * Direct selector to the getCitiesList state
+ * Direct selector to the getCities state
  */
 
 const selectGetCidades = state =>
-  state.getCitiesList || initialState;
+  state.getCities || initialState;
 
 /**
  * Other specific selectors
@@ -19,7 +19,7 @@ const selectGetCidades = state =>
 const makeSelectGetCidades = () =>
   createSelector(
     selectGetCidades,
-    getCitiesListState => getCitiesListState,
+    getCitiesState => getCitiesState,
   );
 
 export default makeSelectGetCidades;

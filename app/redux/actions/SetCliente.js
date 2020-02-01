@@ -1,13 +1,13 @@
 /*
- * GetCidadesActions
+ * SetClienteActions
  *
  */
 
 import { 
-  GET_CIDADES, 
-  GET_CIDADES_SUCCESS, 
-  GET_CIDADES_FAILURE 
-} from 'redux/constants/GetCidades';
+  POST_SET_CLIENTE, 
+  POST_SET_CLIENTE_SUCCESS,
+  POST_SET_CLIENTE_FAILURE
+} from 'redux/constants/SetCliente';
 
 /**
  * Changes the input field of the form
@@ -16,10 +16,10 @@ import {
  *
  * @return {object} An action object with a type of CHANGE_USERNAME
  */
-export function getCidadesAction(uf) {
+export function postSetClienteAction(payload) {
   return {
-    type: GET_CIDADES,
-    uf
+    type: POST_SET_CLIENTE,
+    payload
   };
 }
 
@@ -30,10 +30,17 @@ export function getCidadesAction(uf) {
  *
  * @return {object} An action object with a type of CHANGE_USERNAME
  */
-export function getCidadesSuccessAction(cities) {
+export function postSetClienteSuccessAction(response) {
+  let client;
+  if (response && response.length > 0) {
+    client = response[0]; // { NCLI: "Walace", NPED: "8" }
+  } else {
+    client = null;
+  }
+
   return {
-    type: GET_CIDADES_SUCCESS,
-    cities
+    type: POST_SET_CLIENTE_SUCCESS,
+    client
   };
 }
 
@@ -44,9 +51,9 @@ export function getCidadesSuccessAction(cities) {
  *
  * @return {object} An action object with a type of CHANGE_USERNAME
  */
-export function getCidadesFailureAction(error) {
+export function postSetClienteFailureAction(error) {
   return {
-    type: GET_CIDADES_FAILURE,
+    type: POST_SET_CLIENTE_FAILURE,
     error
   };
 }

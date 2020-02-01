@@ -1,16 +1,16 @@
 /**
  *
- * ModalCampaignsFilter
+ * ModalMediasFilter
  *
  */
 
 import React, { memo } from 'react';
-import CampaignsFilter from './CampaignsFilter';
+import MediasFilter from './MediasFilter';
 import {
   StyledModalFilter
 } from '../styles';
 
-function ModalCampaignsFilter({
+function ModalMediasFilter({
   mediaTypesList,
   mediaTagsList, 
   onDismissModal
@@ -35,7 +35,7 @@ function ModalCampaignsFilter({
                 </a>
               </div>
               <div className="modal-body">
-                <CampaignsFilter 
+                <MediasFilter 
                   mediaTypesList={mediaTypesList}
                   mediaTagsList={mediaTagsList}
                   showOnMobile={false} />
@@ -48,6 +48,6 @@ function ModalCampaignsFilter({
   );
 }
 
-ModalCampaignsFilter.propTypes = {};
+ModalMediasFilter.propTypes = {};
 
-export default memo(ModalCampaignsFilter);
+export default memo(ModalMediasFilter);

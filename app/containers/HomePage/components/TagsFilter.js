@@ -25,7 +25,7 @@ function TagsFilter({
           value={mediaTag.POI}
           onChange={onFilteredMediaTagChange}
           />
-        <span>&nbsp;{mediaTag.POI}</span>
+        <span>{' '}{mediaTag.POI}</span>
       </Label>
     </AccordionCheckbox>
   ));
@@ -40,7 +40,7 @@ function TagsFilter({
             value={null}
             onChange={onFilteredMediaTagChange}
             />
-          <span>&nbsp;NENHUM LOCAL</span>
+          <span>{' '}NENHUM LOCAL</span>
         </Label>
       </AccordionCheckbox>
       {accordionCheckboxs}

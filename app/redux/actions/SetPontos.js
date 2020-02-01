@@ -1,13 +1,13 @@
 /*
- * GetCidadesActions
+ * SetPontosActions
  *
  */
 
 import { 
-  GET_CIDADES, 
-  GET_CIDADES_SUCCESS, 
-  GET_CIDADES_FAILURE 
-} from 'redux/constants/GetCidades';
+  POST_SET_PONTOS, 
+  POST_SET_PONTOS_SUCCESS,
+  POST_SET_PONTOS_FAILURE
+} from 'redux/constants/SetPontos';
 
 /**
  * Changes the input field of the form
@@ -16,10 +16,10 @@ import {
  *
  * @return {object} An action object with a type of CHANGE_USERNAME
  */
-export function getCidadesAction(uf) {
+export function postSetPontosAction(payload) {
   return {
-    type: GET_CIDADES,
-    uf
+    type: POST_SET_PONTOS,
+    payload
   };
 }
 
@@ -30,10 +30,10 @@ export function getCidadesAction(uf) {
  *
  * @return {object} An action object with a type of CHANGE_USERNAME
  */
-export function getCidadesSuccessAction(cities) {
+export function postSetPontosSuccessAction(point) {
   return {
-    type: GET_CIDADES_SUCCESS,
-    cities
+    type: POST_SET_PONTOS_SUCCESS,
+    point
   };
 }
 
@@ -44,9 +44,9 @@ export function getCidadesSuccessAction(cities) {
  *
  * @return {object} An action object with a type of CHANGE_USERNAME
  */
-export function getCidadesFailureAction(error) {
+export function postSetPontosFailureAction(error) {
   return {
-    type: GET_CIDADES_FAILURE,
+    type: POST_SET_PONTOS_FAILURE,
     error
   };
 }

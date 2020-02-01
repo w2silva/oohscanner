@@ -45,12 +45,12 @@ function MediaItem({
                 </StyledMediaItemImage>
                 <StyledMediaItemInfos>
                   <Title>
-                    <i className="fa fa-lightbulb-o fa-fw"></i>&nbsp;{data.COD}
+                    <i className="fa fa-lightbulb-o fa-fw"></i>{' '}{data.COD}
                   </Title>
                   <Address>{data.LOC.toLowerCase()}</Address>
                   <MediaFormat>
-                    <i className="fa fa-television fa-fw"></i>&nbsp;<span>{data.TIP}</span>
-                    <i className="fa fa-lightbulb-o fa-fw"></i>&nbsp;
+                    <i className="fa fa-television fa-fw"></i>{' '}<span>{data.TIP}</span>
+                    <i className="fa fa-lightbulb-o fa-fw"></i>{' '}
                     <span>{data.ILM == 'S' ? 'Iluminado' : 'Não Iluminado'}</span>
                   </MediaFormat>
                 </StyledMediaItemInfos>

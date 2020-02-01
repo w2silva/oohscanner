@@ -16,10 +16,10 @@ import {
  *
  * @return {object} An action object with a type of CHANGE_USERNAME
  */
-export function getListarCidadesAction(uf) {
+export function getListarCidadesAction(typed) {
   return {
     type: GET_LISTAR_CIDADES,
-    uf,
+    typed
   };
 }
 

@@ -12,7 +12,7 @@ import {
 
 // The initial state of the App
 export const initialState = {
-  uf: '',
+  typed: null,
   fetching: false,
   ListarCidades: [], 
   error: null
@@ -24,21 +24,21 @@ const getListarCidadesReducer = (state = initialState, action) =>
     switch (action.type) {
 
       case GET_LISTAR_CIDADES:
-        draft.uf = action.uf;
+        draft.typed = action.typed;
         draft.fetching = true;
         draft.ListarCidades = [];
         draft.error = null;
         break;
 
       case GET_LISTAR_CIDADES_SUCCESS:
-        draft.uf = action.uf;
+        draft.typed = action.typed;
         draft.fetching = false;
         draft.ListarCidades = action.ListarCidades;
         draft.error = null;
         break;
 
       case GET_LISTAR_CIDADES_FAILURE:
-        draft.uf = action.uf;
+        draft.typed = null;
         draft.fetching = false;
         draft.ListarCidades = [];
         draft.error = action.error;

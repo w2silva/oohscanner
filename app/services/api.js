@@ -2,6 +2,7 @@
 import apisauce from 'apisauce'
 import base64 from 'base-64'
 import md5 from 'md5'
+import qs from 'qs'
 import { format } from 'date-fns'
 
 // our "constructor"
@@ -27,7 +28,7 @@ const create = (baseURL = process.env.BASE_URL) => {
       } 
     })
 
-  const apiRequest = (request) => {
+  const apiRequest = (request, params = [], method = 'GET') => {
     const cnpjDaEmpresa = '77610743000108';
     const formattedDate = format(new Date(), 'dd/MM/yyyy')
 
@@ -38,22 +39,47 @@ const create = (baseURL = process.env.BASE_URL) => {
     const identifyBase64 = base64.encode(identifyUpperCase)
     const requestBase64 = base64.encode(request)
 
+    let allRequest = []
+    allRequest.push(identifyBase64)
+    allRequest.push(requestBase64)
+
+    for (let index in params) {
+      const param = params[index]
+      const paramBase64 = base64.encode(param);
+      allRequest.push(paramBase64);
+    }
+
     console.log(`${request} -----------------------`)
     console.log(`MD5: ${identifyUpperCase}`)
     console.log(`Date: ${formattedDate}`)
     console.log(`Raw request: ${identify}/${request}`)
     console.log(`MD5 request: ${identifyMD5}/${request}`)
-    console.log(`All request: ${identifyBase64}/${requestBase64}`)
+
+    const completeRequest = allRequest.join('/');
+    console.log(`All request: ${completeRequest}`)
     
-    return api.get('', { p: `${identifyBase64}/${requestBase64}` })
+    switch (method) {
+      case 'GET':
+        return api.get('', { q: completeRequest });
+      case 'POST':
+        return api.post('', qs.stringify({ 
+          q: completeRequest 
+        }, { encode: true }), {
+          headers: {
+            'content-type': 'application/x-www-form-urlencoded'
+          }
+        });
+      default:
+        return null;
+    }
   }
 
   const getUF = () => {
     return apiRequest(`GetUF`)
   }
 
-  const getCidades = () => {
-    return apiRequest(`GetListarCidades`)
+  const getCidades = (UF) => {
+    return apiRequest(`GetCidades`, [`UF`])
   }
 
   const getListaMidias = () => {
@@ -72,8 +98,8 @@ const create = (baseURL = process.env.BASE_URL) => {
     return apiRequest(`GetMidias/UF/CIDADE/BAIRRO`)
   }
 
-  const getListarCidades = () => {
-    return apiRequest(`GetListarCidades/PARTE_DO_PARAMETRO`)
+  const getListarCidades = (typed) => {
+    return apiRequest(`GetListarCidades`, [typed])
   }
 
   const getTiposMidia = () => {
@@ -92,6 +118,14 @@ const create = (baseURL = process.env.BASE_URL) => {
     return apiRequest(`GetListTiposMidia/TIPO/UF/CIDADE/BAIRRO`)
   }
 
+  const setCliente = ({ firstName, email, phoneNumber }) => {
+    return apiRequest(`SetCliente`, [email, firstName, phoneNumber], 'POST')
+  }
+
+  const setPoint = ({ orderId, pointId, period }) => {
+    return apiRequest(`SetPontos`, [orderId, pointId, period], 'POST')
+  }
+
   return {
     // a list of the API functions from step 2
     setToken,
@@ -108,6 +142,8 @@ const create = (baseURL = process.env.BASE_URL) => {
     getListarTiposMidiaFromCidade,
     getListarTiposMidiaFromBairro,
     getUF,
+    setCliente,
+    setPoint
   }
 }
 

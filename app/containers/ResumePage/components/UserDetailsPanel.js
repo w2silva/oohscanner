@@ -4,20 +4,21 @@
  *
  */
 
-import React, { memo } from 'react';
+import React, { Children, memo } from 'react';
 import { compose } from 'redux';
 
-import Wrapper from './../styles/Wrapper';
-import Heading from './../styles/Heading';
+import Wrapper from '../styles/Wrapper';
+import H3 from 'components/H3';
 
-import FormUser from './FormUser';
-
-export function UserDetailsPanel() {
+export function UserDetailsPanel({
+  children
+}) {
   return (
     <React.Fragment>
       <Wrapper>
-        <Heading>Cadastro Usuário</Heading>
-        <FormUser />
+        <H3>Cadastro Usuário</H3>
+        <p>Crie sua conta para cadastrar seus espaços e começar sua divulgação.</p>
+        {Children.toArray(children)}
       </Wrapper>
     </React.Fragment>
   );

@@ -14,21 +14,38 @@ import FormGroup from './../styles/FormGroup';
 import FormLabel from './../styles/FormLabel';
 import Input from './../styles/Input';
 
-export function FormUser() {
+export function FormUser({
+  firstName,
+  lastName,
+  email,
+  phoneNumber,
+  onFormSubmit,
+  onInputChange
+}) {
   return (
     <React.Fragment>
-      <Form>
+      <Form onSubmit={onFormSubmit}>
         <Row>
           <Col xs={12} sm={6}>
             <FormGroup>
               <FormLabel>Nome</FormLabel>
-              <Input />
+              <Input
+                type={'text'}
+                name={'firstName'}
+                value={firstName}
+                onChange={onInputChange('firstName')}
+              />
             </FormGroup>
           </Col>
           <Col xs={12} sm={6}>
             <FormGroup>
               <FormLabel>Sobrenome</FormLabel>
-              <Input />
+              <Input
+                type={'text'}
+                name={'lastName'}
+                value={lastName}
+                onChange={onInputChange('lastName')}
+              />
             </FormGroup> 
           </Col>
         </Row>
@@ -36,13 +53,23 @@ export function FormUser() {
           <Col xs={12} sm={6}>
             <FormGroup>
               <FormLabel>E-mail</FormLabel>
-              <Input />
+              <Input
+                type={'text'}
+                name={'email'}
+                value={email}
+                onChange={onInputChange('email')}
+              />
             </FormGroup>
           </Col>
           <Col xs={12} sm={6}>
             <FormGroup>
-              <FormLabel>Confirme o E-mail</FormLabel>
-              <Input />
+              <FormLabel>Telefone</FormLabel>
+              <Input
+                type={'text'}
+                name={'phoneNumber'}
+                value={phoneNumber}
+                onChange={onInputChange('phoneNumber')}
+              />
             </FormGroup> 
           </Col>
         </Row>

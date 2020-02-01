@@ -11,8 +11,9 @@ import { Helmet } from 'react-helmet';
 import { 
   HashRouter as Router, 
   Switch, 
-  Route 
+  Route
 } from 'react-router-dom';
+import FadeIn from "react-fade-in";
 
 import HomePage from 'containers/HomePage/Loadable';
 import ResumePage from 'containers/ResumePage/Loadable';
@@ -24,7 +25,7 @@ import AppWrapper from './AppWrapper';
  * Componente que contextualiza e engloba toda a aplicação
  * apartir daqui as principais requisições são feitas.
  */
-export default function App() {
+export function App() {
   return (
     <AppWrapper>
       <Helmet
@@ -33,14 +34,18 @@ export default function App() {
       >
         <meta name="description" content="Oohscanner" />
       </Helmet>
-      <Router>
-        <Switch>
-          <Route exact path="/" component={HomePage} />
-          <Route exact path="/resume" component={ResumePage} />
-          <Route path="" component={NotFoundPage} />
-        </Switch>
-      </Router>
+      <FadeIn delay={100}>
+        <Router>
+          <Switch>
+            <Route exact path="/" component={HomePage} />
+            <Route exact path="/resume" component={ResumePage} />
+            <Route path="" component={NotFoundPage} />
+          </Switch>
+        </Router>
+      </FadeIn>
       <GlobalStyle />
     </AppWrapper>
   );
 }
+
+export default App;
