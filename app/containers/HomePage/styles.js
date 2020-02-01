@@ -144,15 +144,6 @@ export const Button = styled.button`
   }
 `;
 
-export const ButtonFilter = styled(Button)`
-  display: block;
-  margin-bottom: 15px;
-
-  @media ${device.laptop} {
-    display: none;
-  }
-`;
-
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -200,9 +191,6 @@ export const StyledDatePicker = styled.div`
       width: 100%;
     }
   }
-`;
-
-export const StyledWrapperList = styled.div`
 `;
 
 export const StyledWrapperFilter = styled.div`

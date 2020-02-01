@@ -12,7 +12,7 @@ import MediaTypesFilter from './MediaTypesFilter';
 import AddressFilter from './AddressFilter';
 import TagsFilter from './TagsFilter';
 import IlluminatedFilter from './IlluminatedFilter';
-import { StyledWrapperFilter } from '../styles';
+import { StyledWrapperFilter } from '../../../containers/HomePage/styles';
 
 function MediasFilter({ 
   mediaTypesList, 

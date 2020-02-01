@@ -1,12 +1,21 @@
 import { createSelector } from 'reselect';
 import { initialState } from '../reducers/GetListaMidias';
 
+const isEmpty = (value) => 
+  typeof value != 'string' || !value.length
+
 /**
  * Direct selector to the getMediasList state
  */
 
 const selectGetListaMidias = state =>
   state.getMediasList || initialState;
+
+const getMediasList = state => 
+  state.getMediasList.mediasList;
+
+const getMediaTypeFilter = state => 
+  state.getMediasList.mediaTypeFilter;
 
 /**
  * Other specific selectors
@@ -22,14 +31,13 @@ const selectStatesWithMedias = () =>
       }))
   );
 
-const selectMediasList = () =>
+const makeSelectGetMediasListFromType = () =>
   createSelector(
-    selectGetListaMidias,
-    (getMediasListState) => 
-      getMediasListState.mediasList.map((media) => ({
-        ...media,
-        ACTIVED: false,
-      }))
+    [getMediasList, getMediaTypeFilter],
+    (mediasList, mediaTypeFilter) => {
+      console.log(isEmpty(mediaTypeFilter), mediaTypeFilter)
+      return !isEmpty(mediaTypeFilter) ? mediasList.filter((media) => media.TIP === mediaTypeFilter) : mediasList
+    }
   );
 
 /**
@@ -46,5 +54,5 @@ export default makeSelectGetListaMidias;
 export { 
   selectGetListaMidias,
   selectStatesWithMedias,
-  selectMediasList
+  makeSelectGetMediasListFromType
 };

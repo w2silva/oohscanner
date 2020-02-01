@@ -9,7 +9,7 @@ import {
   AccordionWrapper, 
   AccordionToggle, 
   AccordionText 
-} from '../styles';
+} from '../../../containers/HomePage/styles';
 
 function Accordion({
   title,

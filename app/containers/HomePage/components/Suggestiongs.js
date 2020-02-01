@@ -6,9 +6,23 @@
 
 import React, { memo } from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import { Grid, Row, Col } from 'react-flexbox-grid';
-import StyledSuggestions from '../styles/StyledSuggestions';
 import H3 from 'components/H3';
+
+const StyledSuggestions = styled.div`  
+  .content {
+    width: 100%;
+  }
+
+  .content img {
+    border-radius: .375rem;
+
+    position: relative;
+    max-width: 100%;
+    max-height: 100%;
+  }
+`;
 
 const MediaBanner = () => (
   <div className="content">

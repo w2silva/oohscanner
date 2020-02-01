@@ -64,7 +64,7 @@ function SearchBox({
                       value={mediaType}
                       onChange={onChangeMediaType}
                     >
-                      <option value={null}>TODAS</option>
+                      <option value="">TODAS</option>
                       {optionsMedias}
                     </Select>
                   </FormGroup>

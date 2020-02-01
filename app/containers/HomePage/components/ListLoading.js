@@ -1,6 +1,6 @@
 /**
  *
- * MediasListLoading
+ * ListLoading
  *
  */
 
@@ -9,7 +9,9 @@ import PropTypes from 'prop-types';
 import FadeIn from "react-fade-in";
 import ReactLoading from 'react-loading-components';
 
-export function MediasListLoading() {
+export function ListLoading({
+  mediaType
+}) {
   return (
     <React.Fragment>
       <FadeIn>
@@ -25,13 +27,13 @@ export function MediasListLoading() {
               fill="#00a698"
               />
           </div>
-          <p>Buscando espaços com mídias ...</p>
+          <p>Buscando mídias <strong>{mediaType}</strong> espaços com mídias ...</p>
         </div>
       </FadeIn>
     </React.Fragment>
   );
 }
 
-MediasListLoading.propTypes = {};
+ListLoading.propTypes = {};
 
-export default memo(MediasListLoading);
+export default memo(ListLoading);

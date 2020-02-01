@@ -12,6 +12,7 @@ import {
 
 // The initial state of the App
 export const initialState = {
+  mediaTypeFilter: null, 
   mediasList: [],
   fetching: false,
   error: null
@@ -24,6 +25,7 @@ const getListaMidiasReducer = (state = initialState, action) =>
 
       case GET_LISTA_MIDIAS:
         draft.fetching = true;
+        draft.mediaTypeFilter = action.mediaTypeFilter;
         draft.mediasList = [];
         draft.error = null;
         break;

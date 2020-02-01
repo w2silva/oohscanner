@@ -10,34 +10,28 @@ import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
-import { Grid, Row, Col } from 'react-flexbox-grid';
-import FadeIn from "react-fade-in";
-import jQuery from 'jquery';
+import { Grid } from 'react-flexbox-grid';
 
 import { makeSelectLoading } from 'containers/App/selectors';
 import makeSelectGetCidades from 'redux/selectors/GetCidades';
 import makeSelectGetTiposMidia from 'redux/selectors/GetTiposMidia';
 import makeSelectGetListaMidias, { 
   selectStatesWithMedias, 
-  selectMediasList 
+  makeSelectGetMediasListFromType 
 } from 'redux/selectors/GetListaMidias';
 import makeSelectGetListPoi from 'redux/selectors/GetListPoi';
 import makeSelectSelectedMedias from 'redux/selectors/SelectedMedias';
 
 import Header from 'components/Header';
 import SearchBox from './components/SearchBox';
-import MediasList from './components/MediasList';
-import MediasFilter from './components/MediasFilter';
-import ModalMediasFilter from './components/ModalMediasFilter';
-import MediasListLoading from './components/MediasListLoading';
-import MediasListEmpty from './components/MediasListEmpty';
+import ListLoading from './components/ListLoading';
 import Suggestiongs from './components/Suggestiongs';
+import ListMedias from 'components/ListMedias';
 
 import { rootAction } from 'containers/App/actions';
 import { getListaMidiasAction } from 'redux/actions/GetListaMidias';
 import { addSelectedMediaAction, removeSelectedMediaAction } from 'redux/actions/SelectedMedias';
-import { Section, ButtonFilter } from './styles';
-
+import { Section } from './styles';
 
 export function HomePage({
   dispatch,
@@ -51,9 +45,6 @@ export function HomePage({
 }) {
   let pageElement;
   const [mediaTypeState, setMediaTypeState] = useState(null);
-  const [mediaTagState, setMediaTagState] = useState(null);
-  const [mediaIlluminatedState, setMediaIlluminatedState] = useState(false);
-  const [addressState, setAddressState] = useState(null);
   const [regionState, setRegionState] = useState(null);
   const [startDateState, setStartDateState] = useState(new Date());
   const [endDateState, setEndDateState] = useState(new Date());
@@ -75,22 +66,6 @@ export function HomePage({
       mediaType = null;
 
     setMediaTypeState(mediaType);
-  };
-
-  const onChangeMediaTag = mediaTag => {
-    if (typeof mediaTag == 'string' && mediaTag.length == 0)
-      mediaTag = null;
-    setMediaTagState(mediaTag);
-  };
-
-  const onChangeAddress = address => {
-    if (typeof address == 'string' && address.length == 0)
-      address = null;
-    setAddressState(address);
-  };
-
-  const onChangeIlluminate = status => {
-    setMediaIlluminatedState( !mediaIlluminatedState );
   };
 
   const onChangeRegion = region => {
@@ -115,72 +90,19 @@ export function HomePage({
     }
   }
 
-  function handleDismissModal() {
-    jQuery("#myModal").modal("hide")
-  }
-
   // Busca todas midias apartir do parametros
   // filtrados pelo usuário acima.
   function onSubmitForm(event) {
     event.preventDefault();
 
     setSubmittedState(true);
-    dispatch(getListaMidiasAction());
+    dispatch(getListaMidiasAction(mediaTypeState));
     pageElement.scrollIntoView({
       behavior: 'smooth',
       block: 'end'
     })
 
     return false;
-  }
-
-  function renderMediasList() {    
-    if (mediasList.length <= 0) return (<MediasListEmpty />);
-    return (
-      <FadeIn>
-        <Row>
-          <Col xs={12} sm={3}>
-            <MediasFilter 
-              mediaTypesList={getMediaTypes.mediaTypes}
-              mediaTagsList={getListPoi.pois}
-              mediaType={mediaTypeState}
-              onMediaTypeChange={({ target }) => {
-                onChangeMediaType(target.value);
-              }}
-              onMediaTagChange={({ target }) => {
-                onChangeMediaTag(target.value);
-              }}
-              onAddressChange={({ target }) => {
-                onChangeAddress(target.value);
-              }}
-              onMediaIlluminatedChange={({ target }) => {
-                onChangeIlluminate(target.value);
-              }}
-              showOnMobile={false} />
-            <ButtonFilter 
-              type={'button'}
-              data-toggle={'modal'}
-              data-target={'#modal-campaigns-filter'}
-            >
-              <span>Filtrar</span>
-            </ButtonFilter>
-            <ModalMediasFilter 
-              mediaTypesList={getMediaTypes.mediaTypes}
-              mediaTagsList={getListPoi.pois}
-              onDismissModal={handleDismissModal} />
-          </Col>
-          <Col xs={12} sm={9}>
-            <MediasList 
-              filteredMediaType={mediaTypeState}
-              filteredMediaTag={mediaTagState}
-              filteredAddress={addressState}
-              filteredMediaIlluminated={mediaIlluminatedState}
-              mediasList={mediasList}
-              handleItemClick={handleItemClick} />
-          </Col>
-        </Row>
-      </FadeIn>
-    )
   }
 
   return (
@@ -211,9 +133,14 @@ export function HomePage({
           {submittedState && (
             <Grid>
               {getMediasList.fetching === true 
-                ? <MediasListLoading />
-                : renderMediasList()
-              }
+                ? <ListLoading mediaType={mediaTypeState} />
+                : <ListMedias
+                    getMediaTypes={getMediaTypes}
+                    getListPoi={getListPoi}
+                    mediasList={mediasList}
+                    onChangeMediaType={onChangeMediaType}
+                    onSelectMedia={handleItemClick}
+                  />}
             </Grid>
           )}
           <Suggestiongs />
@@ -241,7 +168,7 @@ const mapStateToProps = createStructuredSelector({
   getListPoi: makeSelectGetListPoi(),
   selectedMedias: makeSelectSelectedMedias(),
   statesWithMedias: selectStatesWithMedias(),
-  mediasList: selectMediasList(),
+  mediasList: makeSelectGetMediasListFromType(),
 });
 
 const mapDispatchToProps = (dispatch) => ({

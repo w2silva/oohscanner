@@ -6,7 +6,7 @@
 
 import React, { memo } from 'react';
 import PropTypes from 'prop-types';
-import { AccordionCheckbox, Input } from '../styles';
+import { AccordionCheckbox, Input } from '../../../containers/HomePage/styles';
 
 function AddressFilter({
   onFilteredAddressChange

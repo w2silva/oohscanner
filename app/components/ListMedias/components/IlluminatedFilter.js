@@ -10,7 +10,7 @@ import {
   AccordionCheckbox, 
   Label, 
   Checkbox 
-} from '../styles';
+} from '../../../containers/HomePage/styles';
 
 const IlluminatedFilter = ({
   onFilteredMediaIlluminatedChange

@@ -8,7 +8,7 @@ import React, { memo } from 'react';
 import MediasFilter from './MediasFilter';
 import {
   StyledModalFilter
-} from '../styles';
+} from '../../../containers/HomePage/styles';
 
 function ModalMediasFilter({
   mediaTypesList,

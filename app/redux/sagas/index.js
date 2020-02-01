@@ -228,7 +228,7 @@ export function* getListaMidiasSaga() {
     const { data } = res
 
     if (data !== null && data['Midias']) {
-      yield delay(1000 * 6);
+      yield delay(1000 * 2);
       // dispatch action login success
       yield put(getListaMidiasSuccessAction((data['Midias'] || [])))
     } else {
