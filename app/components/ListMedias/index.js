@@ -29,6 +29,7 @@ function ListMedias({
   onChangeMediaType,
   onSelectMedia
 }) {
+  let pageElement;
   const [mediaTagState, setMediaTagState] = useState(null);
   const [mediaIlluminatedState, setMediaIlluminatedState] = useState(false);
   const [addressState, setAddressState] = useState(null);
@@ -37,6 +38,10 @@ function ListMedias({
     if (typeof mediaTag == 'string' && mediaTag.length == 0)
       mediaTag = null;
     setMediaTagState(mediaTag);
+    pageElement.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    })
   };
 
   const onChangeAddress = address => {
@@ -80,44 +85,46 @@ function ListMedias({
   ))
 
   return (
-    <FadeIn>
-      <Row>
-        <Col xs={12} sm={3}>
-          <MediasFilter 
-            mediaTypesList={getMediaTypes.mediaTypes}
-            mediaTagsList={getListPoi.pois}
-            mediaType={mediaType}
-            onMediaTypeChange={({ target }) => {
-              onChangeMediaType(target.value);
-            }}
-            onMediaTagChange={({ target }) => {
-              onChangeMediaTag(target.value);
-            }}
-            onAddressChange={({ target }) => {
-              onChangeAddress(target.value);
-            }}
-            onMediaIlluminatedChange={({ target }) => {
-              onChangeIlluminate(target.value);
-            }}
-            showOnMobile={false} />
-          <SubmitButton 
-            type={'button'}
-            data-toggle={'modal'}
-            data-target={'#modal-campaigns-filter'}
-          >
-            <span>Filtrar</span>
-          </SubmitButton>
-          <ModalMediasFilter 
-            mediaTypesList={getMediaTypes.mediaTypes}
-            mediaTagsList={getListPoi.pois}
-            onDismissModal={handleDismissModal} />
-        </Col>
-        <Col xs={12} sm={9}>
-          <H3>{filteredMediasList.length} Espaços encontrados</H3>
-          <div style={{ minHeight: '200px' }}>{filteredMediasList}</div>
-        </Col>
-      </Row>
-    </FadeIn>
+    <div ref={(element) => pageElement = element}>
+      <FadeIn>
+        <Row>
+          <Col xs={12} sm={3}>
+            <MediasFilter 
+              mediaTypesList={getMediaTypes.mediaTypes}
+              mediaTagsList={getListPoi.pois}
+              mediaType={mediaType}
+              onMediaTypeChange={({ target }) => {
+                onChangeMediaType(target.value);
+              }}
+              onMediaTagChange={({ target }) => {
+                onChangeMediaTag(target.value);
+              }}
+              onAddressChange={({ target }) => {
+                onChangeAddress(target.value);
+              }}
+              onMediaIlluminatedChange={({ target }) => {
+                onChangeIlluminate(target.value);
+              }}
+              showOnMobile={false} />
+            <SubmitButton 
+              type={'button'}
+              data-toggle={'modal'}
+              data-target={'#modal-campaigns-filter'}
+            >
+              <span>Filtrar</span>
+            </SubmitButton>
+            <ModalMediasFilter 
+              mediaTypesList={getMediaTypes.mediaTypes}
+              mediaTagsList={getListPoi.pois}
+              onDismissModal={handleDismissModal} />
+          </Col>
+          <Col xs={12} sm={9}>
+            <H3>{filteredMediasList.length} Espaços encontrados</H3>
+            <div style={{ minHeight: '200px' }}>{filteredMediasList}</div>
+          </Col>
+        </Row>
+      </FadeIn>
+    </div>
   );
 }
 
