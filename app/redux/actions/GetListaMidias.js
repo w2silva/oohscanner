@@ -16,10 +16,11 @@ import {
  *
  * @return {object} An action object with a type of CHANGE_USERNAME
  */
-export function getListaMidiasAction(mediaTypeFilter) {
+export function getListaMidiasAction(mediaTypeFilter, cityFilter) {
   return {
     type: GET_LISTA_MIDIAS,
-    mediaTypeFilter
+    mediaTypeFilter,
+    cityFilter
   };
 }
 

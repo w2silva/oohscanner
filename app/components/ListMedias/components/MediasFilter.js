@@ -31,13 +31,13 @@ function MediasFilter({
           <AddressFilter 
             mediaTypes={mediaTypesList}
             onFilteredAddressChange={onAddressChange} />
-        </Accordion>
+        </Accordion>*/}
         <Accordion title={'Tipos de Mídia'}>
           <MediaTypesFilter 
             mediaTypes={mediaTypesList}
             mediaType={mediaType}
             onFilteredMediaTypeChange={onMediaTypeChange} />
-        </Accordion>*/}
+        </Accordion>
         <Accordion title={'Pontos de Interesse'}>
           <TagsFilter 
             mediaTags={mediaTagsList}

@@ -36,6 +36,7 @@ const create = (baseURL = process.env.BASE_URL) => {
     const identifyMD5 = md5(identify)
     const identifyUpperCase = identifyMD5.toUpperCase()
 
+    // Base64
     const identifyBase64 = base64.encode(identifyUpperCase)
     const requestBase64 = base64.encode(request)
 
@@ -50,27 +51,18 @@ const create = (baseURL = process.env.BASE_URL) => {
     }
 
     console.log(`${request} -----------------------`)
-    console.log(`MD5: ${identifyUpperCase}`)
+    console.log(`MD5: ${identifyMD5}`)
     console.log(`Date: ${formattedDate}`)
     console.log(`Raw request: ${identify}/${request}`)
-    console.log(`MD5 request: ${identifyMD5}/${request}`)
+    console.log(`MD5 request: ${identifyUpperCase}/${request}`)
 
     const completeRequest = allRequest.join('/');
     console.log(`All request: ${completeRequest}`)
     
-    switch (method) {
-      case 'GET':
-        return api.get('', { q: completeRequest });
-      case 'POST':
-        return api.post('', qs.stringify({ 
-          q: completeRequest 
-        }, { encode: true }), {
-          headers: {
-            'content-type': 'application/x-www-form-urlencoded'
-          }
-        });
-      default:
-        return null;
+    if (process.env.NODE_ENV === 'production') {
+      return api.get(`/${completeRequest}`);
+    } else {
+      return api.get('', { q: completeRequest });
     }
   }
 
@@ -122,8 +114,8 @@ const create = (baseURL = process.env.BASE_URL) => {
     return apiRequest(`SetCliente`, [email, firstName, phoneNumber], 'POST')
   }
 
-  const setPoint = ({ orderId, pointId, period }) => {
-    return apiRequest(`SetPontos`, [orderId, pointId, period], 'POST')
+  const setPoint = ({ orderId, mediaId, period }) => {
+    return apiRequest(`SetPontos`, [orderId, mediaId, period], 'POST')
   }
 
   return {

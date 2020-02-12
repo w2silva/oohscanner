@@ -29,6 +29,7 @@ module.exports = function addDevMiddlewares(app, webpackConfig) {
   
   app.get('/api', ({ query: { q }}, res, next) => {
     const url = `http://planetooh.ddns.net:9400/${q}`;
+    console.log(q, url)
     request(url, { json: true }, (err, resp, body) => {
       if (err) { return console.log(err); }
       res.json(body);

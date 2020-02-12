@@ -25,7 +25,7 @@ function MediaTypesFilter({
           name={'media_type_filter'}
           value={item.TIP}
           checked={mediaType === item.TIP ? true : false}
-          onChange={onFilteredMediaTypeChange}
+          onChange={(event) => onFilteredMediaTypeChange(event, 'filter')}
           />
         <span>{' '}{item.TIP}</span>
       </Label>
@@ -40,7 +40,8 @@ function MediaTypesFilter({
             type={'radio'}
             name={'media_type_filter'}
             value={null}
-            onChange={onFilteredMediaTypeChange}
+            checked={(mediaType === null || (typeof mediaType == 'string' && mediaType.length == 0)) ? true : false}
+            onChange={(event) => onFilteredMediaTypeChange(event, 'filter')}
             />
           <span>{' '}TODAS</span>
         </Label>

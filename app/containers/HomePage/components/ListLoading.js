@@ -10,7 +10,8 @@ import FadeIn from "react-fade-in";
 import ReactLoading from 'react-loading-components';
 
 export function ListLoading({
-  mediaType
+  mediaType,
+  region
 }) {
   return (
     <React.Fragment>
@@ -27,7 +28,7 @@ export function ListLoading({
               fill="#00a698"
               />
           </div>
-          <p>Buscando mídias <strong>{mediaType}</strong> espaços com mídias ...</p>
+          <p>Buscando mídias <strong>{mediaType}</strong> em <strong>{region}</strong>...</p>
         </div>
       </FadeIn>
     </React.Fragment>

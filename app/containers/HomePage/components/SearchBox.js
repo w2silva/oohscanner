@@ -4,9 +4,10 @@
  *
  */
 
-import React, { memo } from 'react';
+import React, { memo, useState, useEffect } from 'react';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import DatePicker from "react-datepicker";
+import ReactSelect from 'react-select';
 import "react-datepicker/dist/react-datepicker.css";
 
 import InputRegion from 'components/InputRegion';
@@ -36,12 +37,22 @@ function SearchBox({
   onChangeEndDate, 
   onSubmitForm 
 }) {
+  const [mediaTypeState, setMediaTypeState] = useState(mediaType);
+  const optionsMedias = mediaTypesList.map((item, index) => ({
+    label: item.TIP,
+    value: item.TIP
+  }))
+  optionsMedias.unshift({
+    label: "TODOS",
+    value: null
+  });
 
-  const optionsMedias = mediaTypesList.map((item, index) => (
-    <option key={index} value={item.TIP}>
-      {item.TIP}
-    </option>
-  ))
+  useEffect(() => {
+    setMediaTypeState({ 
+      label: mediaType == null ? "TODOS" : mediaType, 
+      value: mediaType == null ? null : mediaType
+    });
+  }, [mediaType])
 
   return (
     <React.Fragment>
@@ -56,23 +67,25 @@ function SearchBox({
                 <Col xs={12} sm={6} md={4}>
                   <FormGroup>
                     <FormLabel htmlFor="mediaType">Tipo de Midia</FormLabel>
-                    <Select
-                      id="mediaType"
-                      type="text"
-                      placeholder="mxstbr"
-                      defaultValue={null} 
-                      value={mediaType}
-                      onChange={onChangeMediaType}
-                    >
-                      <option value="">TODAS</option>
-                      {optionsMedias}
-                    </Select>
+                    <ReactSelect
+                      autoFocus={true}
+                      isSearchable={true}
+                      className="input-control"
+                      classNamePrefix="input"
+                      placeholder="Selecione um tipo de mídia"
+                      value={mediaTypeState}
+                      onChange={(selected) => onChangeMediaType(selected.value, 'searchBox')}
+                      options={optionsMedias}
+                    />
                   </FormGroup>
                 </Col>
                 <Col xs={12} sm={6} md={4}>
                   <FormGroup>
                     <FormLabel htmlFor="region">Região (selecionar no mapa)</FormLabel>
-                    <InputRegion defaultCities={citiesList} />
+                    <InputRegion 
+                      citiesList={citiesList}
+                      onChangeRegion={onChangeRegion}
+                    />
                   </FormGroup>
                 </Col>
                 <Col xs={12} sm={6} md={4}>

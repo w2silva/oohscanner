@@ -33,7 +33,10 @@ export function postSetClienteAction(payload) {
 export function postSetClienteSuccessAction(response) {
   let client;
   if (response && response.length > 0) {
-    client = response[0]; // { NCLI: "Walace", NPED: "8" }
+    client = {
+      id: response[0]['NCLI'],
+      orderId: response[0]['NPED']
+    };
   } else {
     client = null;
   }

@@ -41,7 +41,7 @@ function ListMedias({
     pageElement.scrollIntoView({
       behavior: 'smooth',
       block: 'start'
-    })
+    });
   };
 
   const onChangeAddress = address => {
@@ -52,6 +52,10 @@ function ListMedias({
 
   const onChangeIlluminate = status => {
     setMediaIlluminatedState( !mediaIlluminatedState );
+    pageElement.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
   };
   
   if (mediasList.length <= 0) {
@@ -93,8 +97,8 @@ function ListMedias({
               mediaTypesList={getMediaTypes.mediaTypes}
               mediaTagsList={getListPoi.pois}
               mediaType={mediaType}
-              onMediaTypeChange={({ target }) => {
-                onChangeMediaType(target.value);
+              onMediaTypeChange={({ target }, param) => {
+                onChangeMediaType(target.value, param);
               }}
               onMediaTagChange={({ target }) => {
                 onChangeMediaTag(target.value);

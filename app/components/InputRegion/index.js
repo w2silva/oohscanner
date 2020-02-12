@@ -6,17 +6,20 @@
 
 import React, { memo, useState } from 'react';
 import Autocomplete from 'react-autocomplete';
+import ReactSelect from 'react-select';
+import AsyncSelect from 'react-select/async';
 import Wrapper from './Wrapper';
 import MapModal from 'components/MapModal';
 import bootstrap from "bootstrap"; // eslint-disable-line no-unused-vars
 import 'components/../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import $ from 'jquery';
+import MapBounds from './components/MapBounds';
 
 var hideModal = hideModalInfo => {
   $("#myModal").modal("hide");
 };
 
-const googleMapsApiKey = "AIzaSyClACizHU3nG5Nw6VIdwZcyMBq9SOzIhg4";
+const googleMapsApiKey = "AIzaSyCPijjYfR5WYoItWr2RlW2UAuAr_aloHJY";
 
 const modalMapStyles = [
   {
@@ -90,62 +93,46 @@ const modalMapStyles = [
   }
 ];
 
-function InputRegion({ defaultCities }) {
-  const [valueState, setValueState] = useState('')
-  const [itemListState, setItemListState] = useState([])
-  const [openMapModalState, setOpenMapModalState] = useState(false)
+function InputRegion({ 
+  citiesList,
+  onChangeRegion 
+}) {
+  const [regionState, setRegionState] = useState(null);
+  const [mapBoundsState, setMapBoundsState] = useState(null);
 
-  let requestTimer = null
-  const matchRecordToTerm = (records, value) => {
-    return records.Cidades.toLowerCase().indexOf(value.toLowerCase()) !== -1
+  const filterSelect = (inputValue) => 
+    citiesList.filter(i =>
+      i.label.toLowerCase().includes(inputValue.toLowerCase())
+    );
+  
+  const promiseOptions = (inputValue, callback) => {
+    callback(filterSelect(inputValue));
   }
-  const fakeRequest = (value, cb) => {
-    return setTimeout(cb, 500, value ?
-      defaultCities.filter(state => matchRecordToTerm(state, value)) :
-      defaultCities
-    )
+
+  const handleInputChange = (newValue) => {
+    const inputValue = newValue.replace(/\W/g, '');
+    setRegionState(inputValue);
+
+    return inputValue;
+  }
+
+  const handleMapBoundsChange = (latLngBounds) => {
+    setMapBoundsState(latLngBounds.toString());
   }
 
   return (
     <React.Fragment>
       <Wrapper>
-        <Autocomplete
-          inputProps={{ 
-            id: 'states-autocomplete', 
-            placeholder: 'Digite sua cidade ou estado' 
-          }}
-          wrapperStyle={{
-            position: 'relative'
-          }}
-          value={valueState}
-          items={itemListState}
-          getItemValue={(item) => item.name}
-          onSelect={(value, item) => {
-            // set the menu to only the selected item
-            setValueState(value)
-            setItemListState([item])
-
-            // or you could reset it to a default list again
-            // this.setState({ unitedStates: getStates() })
-          }}
-          onChange={(event, value) => {
-            setValueState(value)
-            clearTimeout(requestTimer)
-            requestTimer = fakeRequest(value, (items) => {
-              setItemListState(items)
-            })
-          }}
-          renderMenu={children => (
-            <div className="menu">
-              {children}
-            </div>
-          )}
-          renderItem={(item, isHighlighted) => (
-            <div
-              className={`item ${isHighlighted ? 'item-highlighted' : ''}`}
-              key={item.abbr}
-            >{item.name}</div>
-          )}
+        <AsyncSelect 
+          isSearchable={true}
+          className="input-control"
+          classNamePrefix="input"
+          placeholder="Digite uma cidade ou região"
+          cacheOptions 
+          defaultOptions 
+          loadOptions={promiseOptions}  
+          onInputChange={handleInputChange}
+          onChange={(selected) => onChangeRegion(selected.value)}
         />
         <i 
           className="fa fa-map fa-lg fa-fw"
@@ -176,6 +163,7 @@ function InputRegion({ defaultCities }) {
                     center={[42.302, -71.033]}
                     styles={modalMapStyles}
                     zoom={13}
+                    setBounds={handleMapBoundsChange}
                   />
                 </div>
               </div>
@@ -199,6 +187,7 @@ function InputRegion({ defaultCities }) {
           </div>
         </div>
       </Wrapper>
+      <MapBounds mapBounds={mapBoundsState} />
     </React.Fragment>
   );
 }

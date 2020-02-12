@@ -18,6 +18,7 @@ import makeSelectSelectedMedias from 'redux/selectors/SelectedMedias';
 import makeSelectSetCliente from 'redux/selectors/SetCliente';
 
 import { postSetClienteAction } from 'redux/actions/SetCliente';
+import { postSetPontosAction } from 'redux/actions/SetPontos';
 import { removeSelectedMediaAction } from 'redux/actions/SelectedMedias';
 
 import Header from 'components/Header';
@@ -41,11 +42,22 @@ export function ResumePage({
     email: 'wsilva.emp@gmail.com',
     phoneNumber: '11977757308'
   });
-  const [prevSetClientState, setPrevSetClientState] = useState(null)
+  const [prevClientState, setPrevClientState] = useState(null)
 
   useEffect(() => {
-    if (prevSetClientState != setClient) {
-      setPrevSetClientState(setClient)
+    if (prevClientState != setClient.client) {
+      setPrevClientState(setClient.client)
+
+      for (let index in selectedMediasList) {
+        const selectedMedia = selectedMediasList[index];
+        const data = {
+          orderId: prevClientState.orderId,
+          mediaId: selectedMedia.ID,
+          period: '01/01/2020-01/01/2021'
+        }
+
+        dispatch(postSetPontosAction(data));
+      }
     }
   }, [setClient])
 

@@ -61,11 +61,16 @@ export function HomePage({
     }
   }, [])
 
-  const onChangeMediaType = mediaType => {
+  const onChangeMediaType = (mediaType, commandFrom = null) => {
     if (typeof mediaType == 'string' && mediaType.length == 0)
       mediaType = null;
 
     setMediaTypeState(mediaType);
+
+    console.log(mediaType, commandFrom)
+    if (commandFrom === 'filter') {
+      dispatch(getListaMidiasAction(mediaType, regionState));
+    }
   };
 
   const onChangeRegion = region => {
@@ -96,7 +101,7 @@ export function HomePage({
     event.preventDefault();
 
     setSubmittedState(true);
-    dispatch(getListaMidiasAction(mediaTypeState));
+    dispatch(getListaMidiasAction(mediaTypeState, regionState));
     pageElement.scrollIntoView({
       behavior: 'smooth',
       block: 'end'
@@ -115,14 +120,12 @@ export function HomePage({
         <Section>
           <SearchBox
             mediaTypesList={getMediaTypes.mediaTypes}
-            citiesList={getCities.cities}
+            citiesList={statesWithMedias}
             mediaType={mediaTypeState}
             region={regionState}
             startDate={startDateState}
             endDate={endDateState}
-            onChangeMediaType={({ target }) => {
-              onChangeMediaType(target.value);
-            }}
+            onChangeMediaType={onChangeMediaType}
             onChangeRegion={onChangeRegion}
             onChangeStartDate={onChangeStartDate}
             onChangeEndDate={onChangeEndDate}
@@ -133,11 +136,15 @@ export function HomePage({
           {submittedState && (
             <Grid>
               {getMediasList.fetching === true 
-                ? <ListLoading mediaType={mediaTypeState} />
+                ? <ListLoading 
+                    mediaType={mediaTypeState} 
+                    region={regionState} 
+                  />
                 : <ListMedias
                     getMediaTypes={getMediaTypes}
                     getListPoi={getListPoi}
                     mediasList={mediasList}
+                    mediaType={mediaTypeState}
                     onChangeMediaType={onChangeMediaType}
                     onSelectMedia={handleItemClick}
                   />}

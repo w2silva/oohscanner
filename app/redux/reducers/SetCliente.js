@@ -14,7 +14,7 @@ import {
 // The initial state of the App
 export const initialState = {
   payload: null,
-  cliente: null,
+  client: null,
   sending: null,
   error: null
 };
@@ -26,21 +26,21 @@ const setClienteReducer = (state = initialState, action) =>
 
       case POST_SET_CLIENTE:
         draft.payload = action.payload;
-        draft.cliente = null;
+        draft.client = null;
         draft.sending = true;
         draft.error = null;
         break;
 
       case POST_SET_CLIENTE_SUCCESS:
         draft.payload = action.payload;
-        draft.cliente = action.client;
+        draft.client = action.client;
         draft.sending = false;
         draft.error = null;
         break;
 
       case POST_SET_CLIENTE_FAILURE:
         draft.payload = action.payload;
-        draft.cliente = null;
+        draft.client = null;
         draft.sending = false;
         draft.error = action.error;
         break;

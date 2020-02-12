@@ -12,6 +12,7 @@ import { POST_SET_CLIENTE } from 'redux/constants/SetCliente';
 import { POST_SET_PONTOS } from 'redux/constants/SetPontos';
 
 import { getTiposMidiaAction } from 'redux/actions/GetTiposMidia';
+import { getListaMidiasAction } from 'redux/actions/GetListaMidias';
 import { getListPoiAction } from 'redux/actions/GetListPoi';
 import { getCidadesAction } from 'redux/actions/GetCidades';
 import { getListarCidadesAction } from 'redux/actions/GetListarCidades';
@@ -19,7 +20,7 @@ import { getListarCidadesAction } from 'redux/actions/GetListarCidades';
 import Api from 'services/api'
 import FixtureApi from 'services/fixture_api'
 
-const api = process.env.NODE_ENV === 'production' ? Api : FixtureApi;
+const api = process.env.NODE_ENV !== 'production' ? Api : FixtureApi;
 
 import {
   getCidadesSuccessAction,
@@ -68,6 +69,8 @@ import {
  */
 export function* rootSaga() {
   yield put(getTiposMidiaAction());
+  yield delay(1000);
+  yield put(getListaMidiasAction());
 }
 
 /**

@@ -23,10 +23,16 @@ import StyledMediaItemMap from '../styles/StyledMediaItemMap';
 import StyledMediaItemContent from '../styles/StyledMediaItemContent';
 import StyledMediaItemFooter from '../styles/StyledMediaItemFooter';
 
+const googleMapsApiKey = "AIzaSyCPijjYfR5WYoItWr2RlW2UAuAr_aloHJY";
+
 function MediaItem({ 
   data, 
   onClickItem 
 }) {
+  const staticMap = `https://maps.googleapis.com/maps/api/staticmap?center=${data.LOC}&zoom=13&size=180x140&maptype=roadmap` + 
+  `&markers=color:blue%7Clabel:S%7C${data.LAT},${data.LON}` + 
+  `&key=${googleMapsApiKey}`;
+
   return (
     <React.Fragment>
       <StyledWrapperMediaItem 
@@ -47,7 +53,7 @@ function MediaItem({
                   <Title>
                     <i className="fa fa-lightbulb-o fa-fw"></i>{' '}{data.COD}
                   </Title>
-                  <Address>{data.LOC.toLowerCase()}</Address>
+                  <Address>{`${data.LOC} - ${data.CID}`}</Address>
                   <MediaFormat>
                     <i className="fa fa-television fa-fw"></i>{' '}<span>{data.TIP}</span>
                     <i className="fa fa-lightbulb-o fa-fw"></i>{' '}
@@ -57,7 +63,11 @@ function MediaItem({
               </StyledMediaItemDetails>
             </Col>
             <Col xs={12} sm={3}>
-              <StyledMediaItemMap lat={data.LAT} lat={data.LON} />
+              <StyledMediaItemMap lat={data.LAT} lat={data.LON}>
+                {/*<Img 
+                  src={staticMap} 
+                  alt={data.COD} />*/}
+              </StyledMediaItemMap>
             </Col>
           </Row>
         </StyledMediaItemContent>
