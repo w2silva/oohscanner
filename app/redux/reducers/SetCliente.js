@@ -41,7 +41,7 @@ const setClienteReducer = (state = initialState, action) =>
       case POST_SET_CLIENTE_FAILURE:
         draft.payload = action.payload;
         draft.client = null;
-        draft.sending = false;
+        draft.sending = process.env.NODE_ENV === 'production' ? false : true;
         draft.error = action.error;
         break;
 

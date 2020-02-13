@@ -51,7 +51,7 @@ function Header({
                   {mediasCounter > 0 && <span className="badget">{mediasCounter}</span>}
                 </ShoppingCart>
                 <Button onClick={onClick}>
-                  <span>Finalizar compra</span>
+                  <span>Solicitar campanha</span>
                 </Button>
               </NavRight>
             </Col>

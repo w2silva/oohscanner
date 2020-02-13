@@ -20,7 +20,7 @@ import { getListarCidadesAction } from 'redux/actions/GetListarCidades';
 import Api from 'services/api'
 import FixtureApi from 'services/fixture_api'
 
-const api = process.env.NODE_ENV !== 'production' ? Api : FixtureApi;
+const api = process.env.NODE_ENV === 'production' ? Api : FixtureApi;
 
 import {
   getCidadesSuccessAction,

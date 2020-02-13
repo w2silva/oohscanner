@@ -12,34 +12,102 @@ import {
   GoogleMap,
 } from "react-google-maps";
 import { DrawingManager } from "react-google-maps/lib/components/drawing/DrawingManager";
-import GoogleMapReact from "google-map-react";
+
+const modalMapStyles = [
+  {
+    featureType: "landscape.natural",
+    elementType: "geometry.fill",
+    stylers: [
+      {
+        visibility: "on"
+      },
+      {
+        color: "#e0efef"
+      }
+    ]
+  },
+  {
+    featureType: "poi",
+    elementType: "geometry.fill",
+    stylers: [
+      {
+        visibility: "on"
+      },
+      {
+        hue: "#1900ff"
+      },
+      {
+        color: "#c0e8e8"
+      }
+    ]
+  },
+  {
+    featureType: "road",
+    elementType: "geometry",
+    stylers: [
+      {
+        lightness: 100
+      },
+      {
+        visibility: "simplified"
+      }
+    ]
+  },
+  {
+    featureType: "road",
+    elementType: "labels",
+    stylers: [
+      {
+        visibility: "off"
+      }
+    ]
+  },
+  {
+    featureType: "transit.line",
+    elementType: "geometry",
+    stylers: [
+      {
+        visibility: "on"
+      },
+      {
+        lightness: 700
+      }
+    ]
+  },
+  {
+    featureType: "water",
+    elementType: "all",
+    stylers: [
+      {
+        color: "#7dcdcd"
+      }
+    ]
+  }
+];
 
 function MapModal(props) {
   const defaultProps = {
     center: props.center || {
-      lat: props.lat || 41.633,
-      lng: props.lng || -71.222
+      lat: props.lat || -23.5629,
+      lng: props.lng || -46.6544
     },
     zoom: props.zoom || 11,
-    styles: props.styles || [],
+    styles: modalMapStyles,
     layerTypes: props.layerTypes || []
   }
 
+  const drawingModes = [
+    google.maps.drawing.OverlayType.CIRCLE,
+    //google.maps.drawing.OverlayType.POLYGON,
+    //google.maps.drawing.OverlayType.POLYLINE,
+    //google.maps.drawing.OverlayType.RECTANGLE,
+  ];
+
   return (
     <React.Fragment>
-      {/*<GoogleMapReact
-        bootstrapURLKeys={{
-          key: props.apiKey ? props.apiKey : "you need an API key!"
-        }}
-        defaultCenter={defaultProps.center}
-        defaultZoom={defaultProps.zoom}
-        layerTypes={defaultProps.layerTypes}
-        options={{ styles: defaultProps.styles }}
-      >
-      </GoogleMapReact>*/}
       <GoogleMap
-        defaultZoom={8}
-        defaultCenter={new google.maps.LatLng(-34.397, 150.644)}
+        defaultZoom={18}
+        defaultCenter={new google.maps.LatLng(-25.509882, -49.253771)}
       >
         <DrawingManager
           defaultDrawingMode={google.maps.drawing.OverlayType.CIRCLE}
@@ -47,16 +115,12 @@ function MapModal(props) {
             drawingControl: true,
             drawingControlOptions: {
               position: google.maps.ControlPosition.TOP_CENTER,
-              drawingModes: [
-                google.maps.drawing.OverlayType.CIRCLE,
-                google.maps.drawing.OverlayType.POLYGON,
-                google.maps.drawing.OverlayType.POLYLINE,
-                google.maps.drawing.OverlayType.RECTANGLE,
-              ],
+              drawingModes: drawingModes,
             },
             circleOptions: {
-              strokeWeight: 3,
-              clickable: false,
+              strokeWeight: 2,
+              clickable: true,
+              draggable: true,
               editable: true,
               zIndex: 1,
             },
@@ -82,7 +146,7 @@ export default compose(
   withProps({
     googleMapURL: "https://maps.googleapis.com/maps/api/js?key=AIzaSyCPijjYfR5WYoItWr2RlW2UAuAr_aloHJY&v=3.exp&libraries=geometry,drawing,places",
     loadingElement: <div style={{ height: `100%` }} />,
-    containerElement: <div style={{ height: `400px` }} />,
+    containerElement: <div style={{ height: `100%` }} />,
     mapElement: <div style={{ height: `100%` }} />,
   }),
   withScriptjs,

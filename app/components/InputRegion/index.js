@@ -21,81 +21,10 @@ var hideModal = hideModalInfo => {
 
 const googleMapsApiKey = "AIzaSyCPijjYfR5WYoItWr2RlW2UAuAr_aloHJY";
 
-const modalMapStyles = [
-  {
-    featureType: "landscape.natural",
-    elementType: "geometry.fill",
-    stylers: [
-      {
-        visibility: "on"
-      },
-      {
-        color: "#e0efef"
-      }
-    ]
-  },
-  {
-    featureType: "poi",
-    elementType: "geometry.fill",
-    stylers: [
-      {
-        visibility: "on"
-      },
-      {
-        hue: "#1900ff"
-      },
-      {
-        color: "#c0e8e8"
-      }
-    ]
-  },
-  {
-    featureType: "road",
-    elementType: "geometry",
-    stylers: [
-      {
-        lightness: 100
-      },
-      {
-        visibility: "simplified"
-      }
-    ]
-  },
-  {
-    featureType: "road",
-    elementType: "labels",
-    stylers: [
-      {
-        visibility: "off"
-      }
-    ]
-  },
-  {
-    featureType: "transit.line",
-    elementType: "geometry",
-    stylers: [
-      {
-        visibility: "on"
-      },
-      {
-        lightness: 700
-      }
-    ]
-  },
-  {
-    featureType: "water",
-    elementType: "all",
-    stylers: [
-      {
-        color: "#7dcdcd"
-      }
-    ]
-  }
-];
-
 function InputRegion({ 
   citiesList,
-  onChangeRegion 
+  onChangeRegion,
+  onChangeLocationBounds 
 }) {
   const [regionState, setRegionState] = useState(null);
   const [mapBoundsState, setMapBoundsState] = useState(null);
@@ -118,6 +47,12 @@ function InputRegion({
 
   const handleMapBoundsChange = (latLngBounds) => {
     setMapBoundsState(latLngBounds.toString());
+    onChangeLocationBounds(latLngBounds);
+  }
+
+  const handleCancelBounds = () => {
+    setMapBoundsState(null);
+    onChangeLocationBounds(null);
   }
 
   return (
@@ -160,8 +95,7 @@ function InputRegion({
                   {/*modal map is defined here- custom styles and zoom are passed in*/}
                   <MapModal
                     apiKey={googleMapsApiKey}
-                    center={[42.302, -71.033]}
-                    styles={modalMapStyles}
+                    center={[-23.5629, -46.6544]}
                     zoom={13}
                     setBounds={handleMapBoundsChange}
                   />
@@ -187,7 +121,10 @@ function InputRegion({
           </div>
         </div>
       </Wrapper>
-      <MapBounds mapBounds={mapBoundsState} />
+      {mapBoundsState && <MapBounds 
+        mapBounds={mapBoundsState} 
+        onCancelBounds={handleCancelBounds} 
+        />}
     </React.Fragment>
   );
 }

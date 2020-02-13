@@ -25,6 +25,8 @@ import Header from 'components/Header';
 import SelectedMediasList from './components/SelectedMediasList';
 import UserDetailsPanel from './components/UserDetailsPanel';
 import FormUser from './components/FormUser';
+import Loading from './components/Loading';
+import H1 from 'components/H1';
 
 import Panel from './styles/Panel';
 import BackButton from './styles/BackButton';
@@ -42,24 +44,33 @@ export function ResumePage({
     email: 'wsilva.emp@gmail.com',
     phoneNumber: '11977757308'
   });
-  const [prevClientState, setPrevClientState] = useState(null)
+  const [prevClientState, setPrevClientState] = useState(null);
+  const [submittedState, setSubmittedState] = useState(false);
 
   useEffect(() => {
     if (prevClientState != setClient.client) {
       setPrevClientState(setClient.client)
 
-      for (let index in selectedMediasList) {
-        const selectedMedia = selectedMediasList[index];
-        const data = {
-          orderId: prevClientState.orderId,
-          mediaId: selectedMedia.ID,
-          period: '01/01/2020-01/01/2021'
+      if (prevClientState !== null) {
+        for (let index in selectedMediasList) {
+          const selectedMedia = selectedMediasList[index];
+          const data = {
+            orderId: prevClientState.orderId,
+            mediaId: selectedMedia.ID,
+            period: '01/01/2020-01/01/2021'
+          }
+  
+          dispatch(postSetPontosAction(data));
         }
-
-        dispatch(postSetPontosAction(data));
       }
     }
   }, [setClient])
+
+  useEffect(() => {
+    if (prevClientState && prevClientState.client) {
+      setSubmittedState(true);
+    }
+  }, [prevClientState])
 
   const onInputChange = (field) => ({ target }) => {
     let newData = {
@@ -88,40 +99,52 @@ export function ResumePage({
         <meta name="description" content="Description of ResumePage" />
       </Helmet>
       <Header />
-      <Grid>
-        <Panel>
-          <BackButton 
-            onClick={() => {
-              history.goBack();
-            }}
-            style={{ 
-              display: 'inline-block', 
-              marginBottom: 10 
-            }}
-          >
-            <i className="fa fa-chevron-left fa-fw"></i>{' '}Voltar
-          </BackButton>
-          <Row>
-            <Col xs={12} sm={6}>
-              <SelectedMediasList 
-                mediasList={selectedMediasList}
-                onRemovedSelectedMedia={onRemovedSelectedMedia} />
-            </Col>
-            <Col xs={12} sm={6}>
-              <UserDetailsPanel>
-                <FormUser
-                  firstName={dataState.firstName}
-                  lastName={dataState.lastName}
-                  email={dataState.email}
-                  phoneNumber={dataState.phoneNumber}
-                  onFormSubmit={onFormSubmit}
-                  onInputChange={onInputChange}
-                />
-              </UserDetailsPanel>
-            </Col>
-          </Row>
-        </Panel>
-      </Grid>
+      {submittedState === false
+        ? <Grid>
+          {setClient.sending === true 
+            ? <Loading />
+            : <Panel>
+                <BackButton 
+                  onClick={() => {
+                    history.goBack();
+                  }}
+                  style={{ 
+                    display: 'inline-block', 
+                    marginBottom: 10 
+                  }}
+                >
+                  <i className="fa fa-chevron-left fa-fw"></i>{' '}Voltar
+                </BackButton>
+                <Row>
+                  <Col xs={12} sm={6}>
+                    <SelectedMediasList 
+                      mediasList={selectedMediasList}
+                      onRemovedSelectedMedia={onRemovedSelectedMedia} />
+                  </Col>
+                  <Col xs={12} sm={6}>
+                    <UserDetailsPanel>
+                      <FormUser
+                        firstName={dataState.firstName}
+                        lastName={dataState.lastName}
+                        email={dataState.email}
+                        phoneNumber={dataState.phoneNumber}
+                        onFormSubmit={onFormSubmit}
+                        onInputChange={onInputChange}
+                      />
+                    </UserDetailsPanel>
+                  </Col>
+                </Row>
+              </Panel>}
+        </Grid>
+        : <Grid>
+          <Panel>
+            <center>
+              <H1>Parabéns!</H1>
+              <p>Seu cadastro foi efetuado com sucesso!</p>
+            </center>
+          </Panel>
+        </Grid>
+      }
     </React.Fragment>
   );
 }

@@ -17,7 +17,7 @@ import makeSelectGetCidades from 'redux/selectors/GetCidades';
 import makeSelectGetTiposMidia from 'redux/selectors/GetTiposMidia';
 import makeSelectGetListaMidias, { 
   selectStatesWithMedias, 
-  makeSelectGetMediasListFromType 
+  makeSelectGetMediasListFromLocationBounds 
 } from 'redux/selectors/GetListaMidias';
 import makeSelectGetListPoi from 'redux/selectors/GetListPoi';
 import makeSelectSelectedMedias from 'redux/selectors/SelectedMedias';
@@ -46,6 +46,7 @@ export function HomePage({
   let pageElement;
   const [mediaTypeState, setMediaTypeState] = useState(null);
   const [regionState, setRegionState] = useState(null);
+  const [boundsState, setBoundsState] = useState(null);
   const [startDateState, setStartDateState] = useState(new Date());
   const [endDateState, setEndDateState] = useState(new Date());
   const [submittedState, setSubmittedState] = useState(false);
@@ -77,6 +78,10 @@ export function HomePage({
     setRegionState(region);
   };
 
+  const onChangeLocationBounds = bounds => {
+    setBoundsState(bounds)
+  }
+
   const onChangeStartDate = startDate => {
     setStartDateState(startDate);
   };
@@ -101,7 +106,7 @@ export function HomePage({
     event.preventDefault();
 
     setSubmittedState(true);
-    dispatch(getListaMidiasAction(mediaTypeState, regionState));
+    dispatch(getListaMidiasAction(mediaTypeState, regionState, boundsState));
     pageElement.scrollIntoView({
       behavior: 'smooth',
       block: 'end'
@@ -127,6 +132,7 @@ export function HomePage({
             endDate={endDateState}
             onChangeMediaType={onChangeMediaType}
             onChangeRegion={onChangeRegion}
+            onChangeLocationBounds={onChangeLocationBounds}
             onChangeStartDate={onChangeStartDate}
             onChangeEndDate={onChangeEndDate}
             onSubmitForm={onSubmitForm}
@@ -175,7 +181,7 @@ const mapStateToProps = createStructuredSelector({
   getListPoi: makeSelectGetListPoi(),
   selectedMedias: makeSelectSelectedMedias(),
   statesWithMedias: selectStatesWithMedias(),
-  mediasList: makeSelectGetMediasListFromType(),
+  mediasList: makeSelectGetMediasListFromLocationBounds(),
 });
 
 const mapDispatchToProps = (dispatch) => ({

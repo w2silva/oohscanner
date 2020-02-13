@@ -33,6 +33,7 @@ function SearchBox({
   endDate, 
   onChangeMediaType, 
   onChangeRegion, 
+  onChangeLocationBounds, 
   onChangeStartDate, 
   onChangeEndDate, 
   onSubmitForm 
@@ -43,13 +44,13 @@ function SearchBox({
     value: item.TIP
   }))
   optionsMedias.unshift({
-    label: "TODOS",
+    label: "TODAS",
     value: null
   });
 
   useEffect(() => {
     setMediaTypeState({ 
-      label: mediaType == null ? "TODOS" : mediaType, 
+      label: mediaType == null ? "TODAS" : mediaType, 
       value: mediaType == null ? null : mediaType
     });
   }, [mediaType])
@@ -85,6 +86,7 @@ function SearchBox({
                     <InputRegion 
                       citiesList={citiesList}
                       onChangeRegion={onChangeRegion}
+                      onChangeLocationBounds={onChangeLocationBounds}
                     />
                   </FormGroup>
                 </Col>

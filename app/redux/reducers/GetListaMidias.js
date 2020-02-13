@@ -14,6 +14,7 @@ import {
 export const initialState = {
   mediaTypeFilter: null, 
   cityFilter: null, 
+  boundsFilter: null, 
   mediasList: [],
   fetching: false,
   error: null
@@ -28,6 +29,7 @@ const getListaMidiasReducer = (state = initialState, action) =>
         draft.fetching = true;
         draft.mediaTypeFilter = action.mediaTypeFilter;
         draft.cityFilter = action.cityFilter;
+        draft.boundsFilter = action.boundsFilter;
         draft.mediasList = [];
         draft.error = null;
         break;

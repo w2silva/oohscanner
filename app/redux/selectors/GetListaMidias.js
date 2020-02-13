@@ -5,6 +5,28 @@ import { initialState } from '../reducers/GetListaMidias';
 const isEmpty = (value) => 
   typeof value != 'string' || !value.length
 
+const isObjectEmpty = (value) => 
+  typeof value != 'object' || !boundsFilter
+
+const calcCrow = (lat1, lon1, lat2, lon2) => {
+  var R = 6371; // km
+  var dLat = toRad(lat2-lat1);
+  var dLon = toRad(lon2-lon1);
+  var lat1 = toRad(lat1);
+  var lat2 = toRad(lat2);
+
+  var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+    Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2); 
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+  var d = R * c;
+
+  return d;
+}
+
+const toRad = (Value) => {
+  return Value * Math.PI / 180;
+}
+
 /**
  * Direct selector to the getMediasList state
  */
@@ -18,8 +40,11 @@ const getMediasList = state =>
 const getMediaTypeFilter = state => 
   state.getMediasList.mediaTypeFilter;
 
-  const getCityFilter = state => 
-    state.getMediasList.cityFilter;
+const getCityFilter = state => 
+  state.getMediasList.cityFilter;
+
+const getBoundsFilter = state => 
+  state.getMediasList.boundsFilter;
 
 /**
  * Other specific selectors
@@ -59,6 +84,27 @@ const makeSelectGetMediasListFromType = () =>
     }
   );
 
+const makeSelectGetMediasListFromLocationBounds = () =>
+  createSelector(
+    [makeSelectGetMediasListFromType(), getBoundsFilter],
+    (mediasList, boundsFilter) => {
+      let filteredMediasList = mediasList;
+      if (!_.isUndefined(window.google) 
+        && !_.isUndefined(boundsFilter) 
+        && !_.isNull(boundsFilter)) {
+        filteredMediasList = filteredMediasList.filter((media) => {
+          const latLng = new window.google.maps.LatLng(media.LAT, media.LON)
+          
+          console.log(media.LAT, media.LON, latLng, boundsFilter.contains(latLng))
+          return boundsFilter.contains(latLng);
+        })
+      }
+
+      // return !isEmpty(boundsFilter) ? filteredMediasList.filter((media) => media.CID === cityFilter) : filteredMediasList
+      return filteredMediasList;
+    }
+  );
+
 /**
  * Default selector used by selectGetListaMidias
  */
@@ -73,5 +119,6 @@ export default makeSelectGetListaMidias;
 export { 
   selectGetListaMidias,
   selectStatesWithMedias,
-  makeSelectGetMediasListFromType
+  makeSelectGetMediasListFromType,
+  makeSelectGetMediasListFromLocationBounds
 };
