@@ -94,7 +94,6 @@ const makeSelectGetMediasListFromLocationBounds = () =>
         && !_.isNull(boundsFilter)) {
         filteredMediasList = filteredMediasList.filter((media) => {
           const latLng = new window.google.maps.LatLng(media.LAT, media.LON)
-          
           console.log(media.LAT, media.LON, latLng, boundsFilter.contains(latLng))
           return boundsFilter.contains(latLng);
         })
@@ -104,6 +103,13 @@ const makeSelectGetMediasListFromLocationBounds = () =>
       return filteredMediasList;
     }
   );
+
+const markerMapList = () => 
+  createSelector(
+    selectGetListaMidias,
+    (getMediasListState) => 
+      getMediasListState.mediasList.map((media) => ({ lat: media.LAT, lng: media.LON }))
+  )
 
 /**
  * Default selector used by selectGetListaMidias
@@ -120,5 +126,6 @@ export {
   selectGetListaMidias,
   selectStatesWithMedias,
   makeSelectGetMediasListFromType,
-  makeSelectGetMediasListFromLocationBounds
+  makeSelectGetMediasListFromLocationBounds,
+  markerMapList
 };

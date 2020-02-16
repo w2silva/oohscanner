@@ -4,97 +4,22 @@
  *
  */
 
-import React, { memo } from 'react';
+import React, { memo, useState, useEffect } from 'react';
 import { compose, withProps } from "recompose";
 import {
   withScriptjs,
   withGoogleMap,
   GoogleMap,
+  Marker
 } from "react-google-maps";
 import { DrawingManager } from "react-google-maps/lib/components/drawing/DrawingManager";
+import MapIcon from 'images/map-icon.jpg';
 
-const modalMapStyles = [
-  {
-    featureType: "landscape.natural",
-    elementType: "geometry.fill",
-    stylers: [
-      {
-        visibility: "on"
-      },
-      {
-        color: "#e0efef"
-      }
-    ]
-  },
-  {
-    featureType: "poi",
-    elementType: "geometry.fill",
-    stylers: [
-      {
-        visibility: "on"
-      },
-      {
-        hue: "#1900ff"
-      },
-      {
-        color: "#c0e8e8"
-      }
-    ]
-  },
-  {
-    featureType: "road",
-    elementType: "geometry",
-    stylers: [
-      {
-        lightness: 100
-      },
-      {
-        visibility: "simplified"
-      }
-    ]
-  },
-  {
-    featureType: "road",
-    elementType: "labels",
-    stylers: [
-      {
-        visibility: "off"
-      }
-    ]
-  },
-  {
-    featureType: "transit.line",
-    elementType: "geometry",
-    stylers: [
-      {
-        visibility: "on"
-      },
-      {
-        lightness: 700
-      }
-    ]
-  },
-  {
-    featureType: "water",
-    elementType: "all",
-    stylers: [
-      {
-        color: "#7dcdcd"
-      }
-    ]
-  }
-];
-
-function MapModal(props) {
-  const defaultProps = {
-    center: props.center || {
-      lat: props.lat || -23.5629,
-      lng: props.lng || -46.6544
-    },
-    zoom: props.zoom || 11,
-    styles: modalMapStyles,
-    layerTypes: props.layerTypes || []
-  }
+function MapModal({
+  setBounds,
+  markerMapList
+}) {
+  const [mediasListState, setMediasListState] = useState((markerMapList || []));
 
   const drawingModes = [
     google.maps.drawing.OverlayType.CIRCLE,
@@ -103,10 +28,26 @@ function MapModal(props) {
     //google.maps.drawing.OverlayType.RECTANGLE,
   ];
 
+  useEffect(() => {
+    if (markerMapList && markerMapList.length) {
+      const markerList = markerMapList.map((position, index) => {
+        return <Marker
+          key={index}
+          position={{
+            lat: parseFloat(position.lat),
+            lng: parseFloat(position.lng),
+          }}
+          icon={MapIcon}
+        />
+      })
+      setMediasListState(markerList)
+    }
+  }, [markerMapList])
+
   return (
     <React.Fragment>
       <GoogleMap
-        defaultZoom={18}
+        defaultZoom={10}
         defaultCenter={new google.maps.LatLng(-25.509882, -49.253771)}
       >
         <DrawingManager
@@ -132,9 +73,10 @@ function MapModal(props) {
           }}
           onCircleComplete={(circleDrawn /* google.maps.Circle */) => {
             console.log(circleDrawn, circleDrawn.getBounds() /* google.maps.LatLngBounds */)
-            props.setBounds(circleDrawn.getBounds())
+            setBounds(circleDrawn.getBounds())
           }}
         />
+        {mediasListState}
       </GoogleMap>
     </React.Fragment>
   );

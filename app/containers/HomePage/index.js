@@ -17,7 +17,8 @@ import makeSelectGetCidades from 'redux/selectors/GetCidades';
 import makeSelectGetTiposMidia from 'redux/selectors/GetTiposMidia';
 import makeSelectGetListaMidias, { 
   selectStatesWithMedias, 
-  makeSelectGetMediasListFromLocationBounds 
+  makeSelectGetMediasListFromLocationBounds,
+  markerMapList 
 } from 'redux/selectors/GetListaMidias';
 import makeSelectGetListPoi from 'redux/selectors/GetListPoi';
 import makeSelectSelectedMedias from 'redux/selectors/SelectedMedias';
@@ -41,7 +42,8 @@ export function HomePage({
   getListPoi,
   selectedMedias, 
   statesWithMedias,
-  mediasList
+  mediasList,
+  markerMapList
 }) {
   let pageElement;
   const [mediaTypeState, setMediaTypeState] = useState(null);
@@ -125,6 +127,7 @@ export function HomePage({
         <Section>
           <SearchBox
             mediaTypesList={getMediaTypes.mediaTypes}
+            markerMapList={markerMapList}
             citiesList={statesWithMedias}
             mediaType={mediaTypeState}
             region={regionState}
@@ -182,6 +185,7 @@ const mapStateToProps = createStructuredSelector({
   selectedMedias: makeSelectSelectedMedias(),
   statesWithMedias: selectStatesWithMedias(),
   mediasList: makeSelectGetMediasListFromLocationBounds(),
+  markerMapList: markerMapList(),
 });
 
 const mapDispatchToProps = (dispatch) => ({

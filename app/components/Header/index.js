@@ -20,6 +20,7 @@ import Wrapper from './components/Wrapper';
 import Button from './components/Button';
 import NavRight from './components/NavRight';
 import LogoImage from 'images/logoh.png';
+import MapIcon from 'images/map-icon.jpg';
 import { ShoppingCart } from './styles';
 import messages from './messages';
 
@@ -47,7 +48,7 @@ function Header({
             <Col xs={6}>
               <NavRight>
                 <ShoppingCart>
-                  <i className="fa fa-shopping-cart fa-fw fa-lg"></i>
+                  <Img src={MapIcon} alt="Icone" />
                   {mediasCounter > 0 && <span className="badget">{mediasCounter}</span>}
                 </ShoppingCart>
                 <Button onClick={onClick}>

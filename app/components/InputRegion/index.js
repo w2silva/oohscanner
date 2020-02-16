@@ -23,6 +23,7 @@ const googleMapsApiKey = "AIzaSyCPijjYfR5WYoItWr2RlW2UAuAr_aloHJY";
 
 function InputRegion({ 
   citiesList,
+  markerMapList,
   onChangeRegion,
   onChangeLocationBounds 
 }) {
@@ -75,7 +76,7 @@ function InputRegion({
           data-target="#myModal"></i>
         <div className="modal" tabIndex="-1" role="dialog" id="myModal">
           <div
-            className="modal-dialog modal-lg mvh-90 w-100 d-flex flex-column"
+            className="modal-dialog modal-xl mvh-90 w-100 d-flex flex-column"
             role="document"
           >
             <div className="modal-content flex-grow-1">
@@ -98,6 +99,7 @@ function InputRegion({
                     center={[-23.5629, -46.6544]}
                     zoom={13}
                     setBounds={handleMapBoundsChange}
+                    markerMapList={markerMapList} 
                   />
                 </div>
               </div>

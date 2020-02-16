@@ -26,6 +26,7 @@ import {
 
 function SearchBox({ 
   mediaTypesList,
+  markerMapList,
   citiesList,
   mediaType, 
   region, 
@@ -85,6 +86,7 @@ function SearchBox({
                     <FormLabel htmlFor="region">Região (selecionar no mapa)</FormLabel>
                     <InputRegion 
                       citiesList={citiesList}
+                      markerMapList={markerMapList}
                       onChangeRegion={onChangeRegion}
                       onChangeLocationBounds={onChangeLocationBounds}
                     />

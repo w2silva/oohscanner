@@ -4,6 +4,7 @@ export const ShoppingCart = styled.div`
   position: relative;
   display: inline-block;
   margin: 0px 1em;
+  top: 10px;
 
   .fa {
     cursor: pointer;
