@@ -29,9 +29,14 @@ function MediaItem({
   data, 
   onClickItem 
 }) {
-  const staticMap = `https://maps.googleapis.com/maps/api/staticmap?center=${data.LOC}&zoom=13&size=180x140&maptype=roadmap` + 
+  /*const staticMap = `https://maps.googleapis.com/maps/api/staticmap?center=${data.LOC}&zoom=13&size=180x140&maptype=roadmap` + 
   `&markers=color:blue%7Clabel:S%7C${data.LAT},${data.LON}` + 
-  `&key=${googleMapsApiKey}`;
+  `&key=${googleMapsApiKey}`;*/
+  const staticMap = `http://localhost/oohscanner/get-map-image.php?` + 
+  `ID=${data.ID}` +
+  `&ADDRESS=${data.LOC}` +
+  `&LAT=${data.LAT}` +
+  `&LON=${data.LON}`;
 
   return (
     <React.Fragment>
@@ -67,6 +72,9 @@ function MediaItem({
                 {/*<Img 
                   src={staticMap} 
                   alt={data.COD} />*/}
+                <Img 
+                  src={staticMap} 
+                  alt={data.COD} />
               </StyledMediaItemMap>
             </Col>
           </Row>
